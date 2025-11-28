@@ -32,8 +32,8 @@
 
 1. **Clone and Setup**
    ```bash
-   git clone https://github.com/your-org/student-charity-hub.git
-   cd student-charity-hub
+   git clone https://github.com/Hugues6221394/CharityHub.git
+   cd StudentCharityHub
    ```
 
 2. **Database Configuration**
