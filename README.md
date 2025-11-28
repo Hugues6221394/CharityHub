@@ -17,7 +17,7 @@
 | **Hugues Ngabonziza** | 26148 | Full-Stack Developer & Project Lead |
 | **Keza Manzi Leila** | 26260 | Frontend Developer & UI/UX Designer |
 | **Tesi Divine** | 26017 | Business Analyst & Documentation Specialist & Quality Assurance & Testing Engineer |
-| **Iriza Yvonne** | 25875 |Database Architect|
+| **Iriza Yvonne** | 25875 |Database Architect & Migrations Manager|
 
 ---
 
