@@ -1,0 +1,36 @@
+@model EnableAuthenticatorViewModel
+@{
+    ViewData["Title"] = "Enable Authenticator";
+}
+
+<div class="container">
+    <h2>Enable Two-Factor Authentication</h2>
+    <p>Scan the QR code with your authenticator app:</p>
+    <div class="row">
+        <div class="col-md-6">
+            <div id="qrCode"></div>
+            <p>Or enter this key manually: <code>@Model.SharedKey</code></p>
+        </div>
+        <div class="col-md-6">
+            <form asp-action="EnableAuthenticator" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="mb-3">
+                    <label asp-for="Code" class="form-label">Verification Code</label>
+                    <input asp-for="Code" class="form-control" autocomplete="off" />
+                    <span asp-validation-for="Code" class="text-danger"></span>
+                </div>
+                <button type="submit" class="btn btn-primary">Verify</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+    <script>
+        new QRCode(document.getElementById("qrCode"), "@Model.AuthenticatorUri");
+    </script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+

@@ -1,0 +1,70 @@
+@model ManageViewModel
+@{
+    ViewData["Title"] = "Manage Profile";
+}
+
+<div class="container">
+    <h2>Manage Profile</h2>
+    <div class="row">
+        <div class="col-md-8">
+            <form asp-action="Manage" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="FirstName" class="form-label"></label>
+                        <input asp-for="FirstName" class="form-control" />
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="LastName" class="form-label"></label>
+                        <input asp-for="LastName" class="form-control" />
+                        <span asp-validation-for="LastName" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Email" class="form-label"></label>
+                    <input asp-for="Email" class="form-control" readonly />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="PhoneNumber" class="form-label"></label>
+                    <input asp-for="PhoneNumber" class="form-control" />
+                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                </div>
+                <button type="submit" class="btn btn-primary">Update Profile</button>
+            </form>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">Two-Factor Authentication</div>
+                <div class="card-body">
+                    @if (Model.TwoFactorEnabled)
+                    {
+                        <p class="text-success">2FA is enabled</p>
+                        <form asp-action="Disable2fa" method="post">
+                            <button type="submit" class="btn btn-danger">Disable 2FA</button>
+                        </form>
+                    }
+                    else
+                    {
+                        <p class="text-warning">2FA is disabled</p>
+                        <a asp-action="EnableAuthenticator" class="btn btn-primary">Enable 2FA</a>
+                    }
+                </div>
+            </div>
+            <div class="card mt-3">
+                <div class="card-header">Account Actions</div>
+                <div class="card-body">
+                    <form asp-action="DeleteAccount" method="post" onsubmit="return confirm('Are you sure you want to deactivate your account?');">
+                        <button type="submit" class="btn btn-danger">Deactivate Account</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+

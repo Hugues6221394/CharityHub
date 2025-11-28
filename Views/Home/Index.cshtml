@@ -1,0 +1,53 @@
+@model IEnumerable<Student>
+@{
+    ViewData["Title"] = "Home";
+}
+
+<div class="hero-section bg-primary text-white text-center py-5 mb-5">
+    <div class="container">
+        <h1 class="display-4">Student Charity Hub</h1>
+        <p class="lead">Empowering students through transparent sponsorship and educational support</p>
+        <a asp-controller="Student" asp-action="Index" class="btn btn-light btn-lg mt-3">Browse Students</a>
+    </div>
+</div>
+
+<div class="container">
+    <h2 class="text-center mb-4">Featured Students</h2>
+    <div class="row">
+        @foreach (var student in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    @if (!string.IsNullOrEmpty(student.PhotoUrl))
+                    {
+                        <img src="@student.PhotoUrl" class="card-img-top" alt="@student.FullName" style="height: 200px; object-fit: cover;">
+                    }
+                    else
+                    {
+                        <div class="card-img-top bg-secondary d-flex align-items-center justify-content-center" style="height: 200px;">
+                            <i class="bi bi-person-circle text-white" style="font-size: 4rem;"></i>
+                        </div>
+                    }
+                    <div class="card-body">
+                        <h5 class="card-title">@student.FullName</h5>
+                        <p class="card-text">@student.Location</p>
+                        <div class="progress mb-3">
+                            @{
+                                var progress = (student.AmountRaised / student.FundingGoal) * 100;
+                            }
+                            <div class="progress-bar" role="progressbar" style="width: @(progress > 100 ? 100 : progress)%">
+                                @Math.Round(progress, 1)%
+                            </div>
+                        </div>
+                        <p class="text-muted small">
+                            $@student.AmountRaised.ToString("F2") raised of $@student.FundingGoal.ToString("F2")
+                        </p>
+                        <a asp-controller="Student" asp-action="Details" asp-route-id="@student.Id" class="btn btn-primary">Learn More</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+

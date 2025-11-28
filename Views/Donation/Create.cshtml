@@ -1,0 +1,63 @@
+@model Donation
+@{
+    ViewData["Title"] = "Make a Donation";
+    var student = ViewBag.Student as Student;
+}
+
+<div class="container">
+    <h2>Make a Donation</h2>
+    @if (student != null)
+    {
+        <div class="alert alert-info">
+            <h5>Donating to: @student.FullName</h5>
+            <p>@student.Location | Age: @student.Age</p>
+        </div>
+    }
+    <div class="row">
+        <div class="col-md-8">
+            <form asp-action="Create" method="post">
+                <input type="hidden" asp-for="StudentId" />
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="mb-3">
+                    <label asp-for="Amount" class="form-label">Amount ($)</label>
+                    <input asp-for="Amount" class="form-control" type="number" step="0.01" min="1" />
+                    <span asp-validation-for="Amount" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Payment Method</label>
+                    <div>
+                        <input type="radio" name="paymentMethod" value="PayPal" id="paypal" checked>
+                        <label for="paypal">PayPal</label>
+                    </div>
+                    <div>
+                        <input type="radio" name="paymentMethod" value="MTNMobileMoney" id="mtn">
+                        <label for="mtn">MTN Mobile Money</label>
+                    </div>
+                </div>
+                <div class="mb-3" id="phoneNumberGroup" style="display: none;">
+                    <label class="form-label">Phone Number</label>
+                    <input type="text" name="phoneNumber" class="form-control" placeholder="Enter phone number">
+                </div>
+                <div class="mb-3 form-check">
+                    <input type="checkbox" asp-for="IsRecurring" class="form-check-input" />
+                    <label asp-for="IsRecurring" class="form-check-label">Make this a recurring donation</label>
+                </div>
+                <button type="submit" class="btn btn-primary">Proceed to Payment</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.querySelectorAll('input[name="paymentMethod"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                document.getElementById('phoneNumberGroup').style.display = 
+                    this.value === 'MTNMobileMoney' ? 'block' : 'none';
+            });
+        });
+    </script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+

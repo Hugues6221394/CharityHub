@@ -1,0 +1,74 @@
+@{
+    ViewData["Title"] = "Donor Dashboard";
+    var totalDonated = ViewBag.TotalDonated as decimal? ?? 0;
+    var sponsoredStudents = ViewBag.SponsoredStudents as int? ?? 0;
+    var recentDonations = ViewBag.RecentDonations as List<Donation> ?? new List<Donation>();
+    var followedStudents = ViewBag.FollowedStudents as List<Follow> ?? new List<Follow>();
+    var progressUpdates = ViewBag.ProgressUpdates as List<ProgressReport> ?? new List<ProgressReport>();
+}
+
+<div class="container">
+    <h1>Donor Dashboard</h1>
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <div class="card bg-primary text-white">
+                <div class="card-body">
+                    <h5>Total Donated</h5>
+                    <h2>$@totalDonated.ToString("F2")</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card bg-success text-white">
+                <div class="card-body">
+                    <h5>Sponsored Students</h5>
+                    <h2>@sponsoredStudents</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Recent Donations</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        @foreach (var donation in recentDonations)
+                        {
+                            <li class="list-group-item">
+                                $@donation.Amount.ToString("F2") - @donation.CreatedAt.ToString("MMM dd, yyyy")
+                            </li>
+                        }
+                    </ul>
+                    <a asp-controller="Donation" asp-action="MyDonations" class="btn btn-primary mt-3">View All Donations</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Progress Updates</h5>
+                </div>
+                <div class="card-body">
+                    @foreach (var update in progressUpdates)
+                    {
+                        <div class="card mb-2">
+                            <div class="card-body">
+                                <h6>@update.Title</h6>
+                                <p class="small text-muted">@update.ReportDate.ToString("MMM dd, yyyy")</p>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="mt-4">
+        <a asp-controller="Student" asp-action="Index" class="btn btn-primary">Browse Students</a>
+        <a asp-action="MySponsoredStudents" class="btn btn-primary">My Sponsored Students</a>
+    </div>
+</div>
+
+

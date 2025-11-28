@@ -1,0 +1,38 @@
+@model LoginWith2faViewModel
+@{
+    ViewData["Title"] = "Two-Factor Authentication";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h3 class="text-center mb-0">Two-Factor Authentication</h3>
+            </div>
+            <div class="card-body">
+                <p>Enter the code from your authenticator app:</p>
+                <form asp-action="LoginWith2fa" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="mb-3">
+                        <label asp-for="TwoFactorCode" class="form-label"></label>
+                        <input asp-for="TwoFactorCode" class="form-control" autocomplete="off" />
+                        <span asp-validation-for="TwoFactorCode" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3 form-check">
+                        <input asp-for="RememberMachine" class="form-check-input" />
+                        <label asp-for="RememberMachine" class="form-check-label"></label>
+                    </div>
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">Verify</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+

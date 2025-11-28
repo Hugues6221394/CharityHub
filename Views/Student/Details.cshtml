@@ -1,0 +1,84 @@
+@model Student
+@{
+    ViewData["Title"] = Model.FullName;
+    var donations = ViewBag.Donations as List<Donation> ?? new List<Donation>();
+    var progressReports = ViewBag.ProgressReports as List<ProgressReport> ?? new List<ProgressReport>();
+    var documents = ViewBag.Documents as List<Document> ?? new List<Document>();
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            @if (!string.IsNullOrEmpty(Model.PhotoUrl))
+            {
+                <img src="@Model.PhotoUrl" class="img-fluid rounded mb-3" alt="@Model.FullName">
+            }
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5>Funding Progress</h5>
+                    <div class="progress mb-2">
+                        @{
+                            var progress = Model.FundingGoal > 0 ? (Model.AmountRaised / Model.FundingGoal) * 100 : 0;
+                        }
+                        <div class="progress-bar" role="progressbar" style="width: @(progress > 100 ? 100 : progress)%">
+                            @Math.Round(progress, 1)%
+                        </div>
+                    </div>
+                    <p><strong>$@Model.AmountRaised.ToString("F2")</strong> of <strong>$@Model.FundingGoal.ToString("F2")</strong></p>
+                    @if (User.IsInRole("Donor"))
+                    {
+                        <a asp-controller="Donation" asp-action="Create" asp-route-studentId="@Model.Id" class="btn btn-primary w-100">Donate Now</a>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <h1>@Model.FullName</h1>
+            <p><i class="bi bi-geo-alt"></i> @Model.Location | <i class="bi bi-calendar"></i> Age: @Model.Age</p>
+            @if (!string.IsNullOrEmpty(Model.DreamCareer))
+            {
+                <p><i class="bi bi-briefcase"></i> Dream Career: @Model.DreamCareer</p>
+            }
+            <hr>
+            <h3>Story</h3>
+            <p>@Model.Story</p>
+            @if (!string.IsNullOrEmpty(Model.AcademicBackground))
+            {
+                <h3>Academic Background</h3>
+                <p>@Model.AcademicBackground</p>
+            }
+            <hr>
+            <h3>Progress Reports</h3>
+            @foreach (var report in progressReports)
+            {
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5>@report.Title</h5>
+                        <p class="text-muted">@report.ReportDate.ToString("MMMM dd, yyyy")</p>
+                        <p>@report.Description</p>
+                        @if (!string.IsNullOrEmpty(report.Grade))
+                        {
+                            <p><strong>Grade:</strong> @report.Grade</p>
+                        }
+                        @if (!string.IsNullOrEmpty(report.Achievement))
+                        {
+                            <p><strong>Achievement:</strong> @report.Achievement</p>
+                        }
+                    </div>
+                </div>
+            }
+            <hr>
+            <h3>Documents</h3>
+            <div class="list-group">
+                @foreach (var doc in documents)
+                {
+                    <a href="@doc.FilePath" target="_blank" class="list-group-item list-group-item-action">
+                        <i class="bi bi-file-earmark"></i> @doc.FileName
+                    </a>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+

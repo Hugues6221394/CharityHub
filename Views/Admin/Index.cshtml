@@ -1,0 +1,91 @@
+@{
+    ViewData["Title"] = "Admin Dashboard";
+    var totalStudents = ViewBag.TotalStudents as int? ?? 0;
+    var totalDonations = ViewBag.TotalDonations as int? ?? 0;
+    var totalAmount = ViewBag.TotalAmount as decimal? ?? 0;
+    var totalUsers = ViewBag.TotalUsers as int? ?? 0;
+    var recentDonations = ViewBag.RecentDonations as List<Donation> ?? new List<Donation>();
+    var recentStudents = ViewBag.RecentStudents as List<Student> ?? new List<Student>();
+}
+
+<div class="container">
+    <h1>Admin Dashboard</h1>
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="card bg-primary text-white">
+                <div class="card-body">
+                    <h5>Total Students</h5>
+                    <h2>@totalStudents</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-success text-white">
+                <div class="card-body">
+                    <h5>Total Donations</h5>
+                    <h2>@totalDonations</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-info text-white">
+                <div class="card-body">
+                    <h5>Total Amount</h5>
+                    <h2>$@totalAmount.ToString("F2")</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-warning text-white">
+                <div class="card-body">
+                    <h5>Total Users</h5>
+                    <h2>@totalUsers</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Recent Donations</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        @foreach (var donation in recentDonations)
+                        {
+                            <li class="list-group-item">
+                                $@donation.Amount.ToString("F2") - @donation.CreatedAt.ToString("MMM dd, yyyy")
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Recent Students</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        @foreach (var student in recentStudents)
+                        {
+                            <li class="list-group-item">
+                                <a asp-controller="Student" asp-action="Details" asp-route-id="@student.Id">@student.FullName</a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="mt-4">
+        <a asp-action="Students" class="btn btn-primary">Manage Students</a>
+        <a asp-action="Donations" class="btn btn-primary">Manage Donations</a>
+        <a asp-action="Users" class="btn btn-primary">Manage Users</a>
+        <a asp-controller="Reports" asp-action="Index" class="btn btn-primary">Reports</a>
+    </div>
+</div>
+
+
