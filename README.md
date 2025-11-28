@@ -13,11 +13,11 @@
 
 | Name | Student ID | Role & Responsibilities |
 |------|------------|-------------------------|
-| **Iriza Gatera Merveille** | 26266 | Backend Developer & Database Architect |
+| **Iriza Gatera Merveille** | 26266 | Backend Developer  |
 | **Hugues Ngabonziza** | 26148 | Full-Stack Developer & Project Lead |
 | **Keza Manzi Leila** | 26260 | Frontend Developer & UI/UX Designer |
-| **Tesi Divine** | 26017 | Business Analyst & Documentation Specialist |
-| **Iriza Yvonne** | 25875 | Quality Assurance & Testing Engineer |
+| **Tesi Divine** | 26017 | Business Analyst & Documentation Specialist & Quality Assurance & Testing Engineer |
+| **Iriza Yvonne** | 25875 |Database Architect|
 
 ---
 
