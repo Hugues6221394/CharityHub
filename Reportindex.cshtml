@@ -1,0 +1,30 @@
+a@{
+    ViewData["Title"] = "Reports";
+}
+
+<div class="container">
+    <h1>Reports</h1>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">CSV Report</h5>
+                    <p class="card-text">Download a comprehensive CSV report of all students, donations, and funding status.</p>
+                    <a asp-action="DownloadCSV" class="btn btn-primary">Download CSV</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">PDF Reports</h5>
+                    <p class="card-text">Generate PDF reports for individual students with progress and transcripts.</p>
+                    <p class="text-muted">Select a student from the <a asp-controller="Student" asp-action="Index">Students</a> page to generate their PDF report.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
