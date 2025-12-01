@@ -19,7 +19,8 @@
 | **Tesi Divine** | 26017 | Business Analyst & Documentation Specialist & Quality Assurance & Testing Engineer |
 | **Iriza Yvonne** | 25875 |Database Architect & Fronted Developer|
 
-![Uploading image.png…]()
+<img width="810" height="1080" alt="image" src="https://github.com/user-attachments/assets/b26a0062-1b16-4936-90e0-add44db88d4b" />
+
 
 
 ---
