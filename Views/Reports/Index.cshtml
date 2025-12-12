@@ -1,0 +1,96 @@
+<<<<<<< HEAD
+@{
+    ViewData["Title"] = "Reports";
+}
+
+<div class="container">
+    <h1>Reports</h1>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">CSV Report</h5>
+                    <p class="card-text">Download a comprehensive CSV report of all students, donations, and funding status.</p>
+                    <a asp-action="DownloadCSV" class="btn btn-primary">Download CSV</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">PDF Reports</h5>
+                    <p class="card-text">Generate PDF reports for individual students with progress and transcripts.</p>
+                    <p class="text-muted">Select a student from the <a asp-controller="Student" asp-action="Index">Students</a> page to generate their PDF report.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+=======
+@{
+    ViewData["Title"] = "Reports";
+}
+
+<div class="container py-4">
+    <h1 class="mb-4">
+        <i class="bi bi-bar-chart-line-fill me-2 text-primary"></i>Reports
+    </h1>
+
+    <div class="row g-4">
+        <!-- CSV Report Card -->
+        <div class="col-md-6">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-body d-flex flex-column">
+                    <div class="mb-3">
+                        <h5 class="card-title">
+                            <i class="bi bi-file-earmark-spreadsheet-fill me-2 text-success"></i>CSV Report
+                        </h5>
+                        <p class="card-text text-muted">
+                            Download a comprehensive CSV report of all students, donations, and funding status.
+                        </p>
+                    </div>
+                    <div class="mt-auto">
+                        <a asp-action="DownloadCSV" class="btn btn-success w-100">
+                            <i class="bi bi-download me-1"></i>Download CSV
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PDF Report Card -->
+        <div class="col-md-6">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-body d-flex flex-column">
+                    <div class="mb-3">
+                        <h5 class="card-title">
+                            <i class="bi bi-file-earmark-pdf-fill me-2 text-danger"></i>PDF Reports
+                        </h5>
+                        <p class="card-text text-muted">
+                            Generate PDF reports for individual students with progress and transcripts.
+                        </p>
+                        <p class="text-muted small">
+                            Select a student from the <a asp-controller="Student" asp-action="Index">Students</a> page to generate their PDF report.
+                        </p>
+                    </div>
+                    <div class="mt-auto">
+                        <a asp-controller="Student" asp-action="Index" class="btn btn-outline-danger w-100">
+                            <i class="bi bi-search me-1"></i>Select Student
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .card:hover {
+        transform: translateY(-3px);
+        transition: all 0.2s ease-in-out;
+    }
+</style>
+>>>>>>> origin/GateraMe

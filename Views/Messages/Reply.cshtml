@@ -1,0 +1,197 @@
+<<<<<<< HEAD
+@model StudentCharityHub.Models.Message
+@using StudentCharityHub.Models
+@using System.Security.Claims
+@{
+    ViewData["Title"] = "Reply to Message";
+    var originalMessage = ViewBag.OriginalMessage as Message;
+    var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+    var isReceiver = originalMessage?.ReceiverId == userId;
+    var recipientName = isReceiver 
+        ? (originalMessage?.Sender?.Email ?? originalMessage?.Sender?.FirstName + " " + originalMessage?.Sender?.LastName ?? originalMessage?.SenderId)
+        : (originalMessage?.Receiver?.Email ?? originalMessage?.Receiver?.FirstName + " " + originalMessage?.Receiver?.LastName ?? originalMessage?.ReceiverId);
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-gradient-primary text-white py-3">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h4 class="mb-0">
+                            <i class="bi bi-reply-fill me-2"></i>Reply to Message
+                        </h4>
+                        <a asp-action="Index" class="btn btn-light btn-sm">
+                            <i class="bi bi-arrow-left"></i> Back to Messages
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body p-4">
+                    @if (originalMessage != null)
+                    {
+                        <div class="alert alert-light border mb-4">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <div>
+                                    <h6 class="mb-1">
+                                        <i class="bi bi-person-fill me-2"></i>
+                                        From: @(originalMessage.Sender?.Email ?? originalMessage.Sender?.FirstName + " " + originalMessage.Sender?.LastName ?? originalMessage.SenderId)
+                                    </h6>
+                                    <h6 class="mb-1">
+                                        <i class="bi bi-person-check-fill me-2"></i>
+                                        To: @(originalMessage.Receiver?.Email ?? originalMessage.Receiver?.FirstName + " " + originalMessage.Receiver?.LastName ?? originalMessage.ReceiverId)
+                                    </h6>
+                                    <small class="text-muted">
+                                        <i class="bi bi-calendar3 me-1"></i>
+                                        @originalMessage.CreatedAt.ToString("MMMM dd, yyyy 'at' hh:mm tt")
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="mt-3 pt-3 border-top">
+                                <p class="mb-0" style="white-space: pre-wrap;">@originalMessage.Content</p>
+                            </div>
+                        </div>
+                    }
+
+                    <form asp-action="Reply" method="post">
+                        <input type="hidden" name="messageId" value="@originalMessage?.Id" />
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">
+                                <i class="bi bi-envelope me-2"></i>Reply to: @recipientName
+                            </label>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Content" class="form-label">Your Message</label>
+                            <textarea asp-for="Content" class="form-control" rows="6" placeholder="Type your reply here..."></textarea>
+                            <span asp-validation-for="Content" class="text-danger"></span>
+                        </div>
+
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-send me-2"></i>Send Reply
+                            </button>
+                            <a asp-action="Index" class="btn btn-outline-secondary">
+                                <i class="bi bi-x me-2"></i>Cancel
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .bg-gradient-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+</style>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+=======
+@model StudentCharityHub.Models.Message
+@using StudentCharityHub.Models
+@using System.Security.Claims
+@{
+    ViewData["Title"] = "Reply to Message";
+    var originalMessage = ViewBag.OriginalMessage as Message;
+    var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+    var isReceiver = originalMessage?.ReceiverId == userId;
+    var recipientName = isReceiver
+        ? (originalMessage?.Sender?.Email ?? originalMessage?.Sender?.FirstName + " " + originalMessage?.Sender?.LastName ?? originalMessage?.SenderId)
+        : (originalMessage?.Receiver?.Email ?? originalMessage?.Receiver?.FirstName + " " + originalMessage?.Receiver?.LastName ?? originalMessage?.ReceiverId);
+
+    var messages = ViewBag.Conversation as List<Message> ?? new List<Message>();
+    messages = messages.OrderBy(m => m.CreatedAt).ToList();
+}
+
+<div class="container-fluid py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-lg rounded-4 h-100 d-flex flex-column">
+
+                <!-- Header -->
+                <div class="card-header bg-gradient-primary text-white d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0"><i class="bi bi-reply-fill me-2"></i>Reply to @recipientName</h5>
+                    <a asp-action="Index" class="btn btn-light btn-sm"><i class="bi bi-arrow-left"></i> Back</a>
+                </div>
+
+                <!-- Conversation Thread -->
+                <div class="card-body flex-grow-1 overflow-auto conversation-thread p-3">
+                    @if (messages.Any())
+                    {
+                        foreach (var msg in messages)
+                        {
+                            var isOwn = msg.SenderId == userId;
+                            <div class="d-flex mb-3 @(isOwn ? "justify-content-end" : "")">
+                                <div class="card @(isOwn ? "bg-primary text-white" : "bg-light") rounded-3" style="max-width: 70%;">
+                                    <div class="card-body p-2">
+                                        <div class="d-flex justify-content-between mb-1">
+                                            <small class="fw-bold">@((isOwn) ? "You" : msg.Sender?.Email ?? msg.Sender?.FirstName + " " + msg.Sender?.LastName ?? msg.SenderId)</small>
+                                            <small class="text-muted" style="font-size:0.75rem;">@msg.CreatedAt.ToString("MMM dd, hh:mm tt")</small>
+                                        </div>
+                                        <p class="mb-0" style="white-space: pre-wrap;">@msg.Content</p>
+                                        @if (!string.IsNullOrEmpty(msg.ModeratorNotes))
+                                        {
+                                            <div class="alert alert-warning mt-1 mb-0 p-1" style="font-size:0.75rem;">
+                                                <i class="bi bi-shield-check me-1"></i>@msg.ModeratorNotes
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <p class="text-muted text-center mt-5">No previous messages. Start your reply below.</p>
+                    }
+                </div>
+
+                <!-- Reply Box -->
+                <div class="card-footer bg-light">
+                    <form asp-action="Reply" method="post" class="d-flex gap-2">
+                        <input type="hidden" name="messageId" value="@originalMessage?.Id" />
+                        <textarea asp-for="Content" class="form-control" rows="2" placeholder="Type your reply..." required></textarea>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-send-fill"></i> Send
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .bg-gradient-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+
+    .conversation-thread {
+        max-height: 60vh;
+        overflow-y: auto;
+        padding-right: 5px;
+    }
+
+        .conversation-thread::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .conversation-thread::-webkit-scrollbar-thumb {
+            background-color: rgba(0,0,0,0.2);
+            border-radius: 3px;
+        }
+</style>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+>>>>>>> origin/GateraMe

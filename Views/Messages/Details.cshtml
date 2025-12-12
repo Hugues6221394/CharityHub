@@ -1,0 +1,471 @@
+<<<<<<< HEAD
+@model StudentCharityHub.Models.Message
+@using StudentCharityHub.Models
+@using System.Security.Claims
+@{
+    ViewData["Title"] = "Message Details";
+    var userId = User.FindFirstValue(System.Security.Claims.ClaimTypes.NameIdentifier);
+    var isSender = Model.SenderId == userId;
+    var isReceiver = Model.ReceiverId == userId;
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-gradient-primary text-white py-3">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h4 class="mb-0">
+                            <i class="bi bi-envelope-fill me-2"></i>Message Details
+                        </h4>
+                        <a asp-action="Index" class="btn btn-light btn-sm">
+                            <i class="bi bi-arrow-left"></i> Back to Messages
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body p-4">
+                    <div class="message-header mb-4 pb-3 border-bottom">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <h6 class="text-muted mb-1">
+                                    <i class="bi bi-person-fill me-2"></i>From:
+                                </h6>
+                                <p class="mb-0 fw-bold">@(ViewBag.Sender?.Email ?? ViewBag.Sender?.FirstName + " " + ViewBag.Sender?.LastName ?? Model.SenderId)</p>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <h6 class="text-muted mb-1">
+                                    <i class="bi bi-person-check-fill me-2"></i>To:
+                                </h6>
+                                <p class="mb-0 fw-bold">@(ViewBag.Receiver?.Email ?? ViewBag.Receiver?.FirstName + " " + ViewBag.Receiver?.LastName ?? Model.ReceiverId)</p>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-md-6">
+                                <small class="text-muted">
+                                    <i class="bi bi-calendar3 me-1"></i>
+                                    Sent: @Model.CreatedAt.ToString("MMMM dd, yyyy 'at' hh:mm tt")
+                                </small>
+                            </div>
+                            @if (Model.IsRead && Model.ReadAt.HasValue)
+                            {
+                                <div class="col-md-6">
+                                    <small class="text-muted">
+                                        <i class="bi bi-check-circle me-1"></i>
+                                        Read: @Model.ReadAt.Value.ToString("MMMM dd, yyyy 'at' hh:mm tt")
+                                    </small>
+                                </div>
+                            }
+                        </div>
+                        @if (Model.StudentId > 0 && ViewBag.Student != null)
+                        {
+                            var student = ViewBag.Student as StudentCharityHub.Models.Student;
+                            <div class="mt-3">
+                                <span class="badge bg-info">
+                                    <i class="bi bi-mortarboard me-1"></i>
+                                    About: @student?.FullName
+                                </span>
+                            </div>
+                        }
+                    </div>
+
+                    <div class="message-content mb-4">
+                        <h6 class="text-muted mb-3">Message:</h6>
+                        <div class="alert alert-light border p-4 rounded-3" style="background-color: #f8f9fa;">
+                            <p class="mb-0" style="white-space: pre-wrap; line-height: 1.8;">@Model.Content</p>
+                        </div>
+                    </div>
+
+                    @if (!string.IsNullOrEmpty(Model.ModeratorNotes))
+                    {
+                        <div class="alert alert-warning mb-4">
+                            <h6 class="mb-2">
+                                <i class="bi bi-shield-check me-2"></i>Moderator Notes:
+                            </h6>
+                            <p class="mb-0">@Model.ModeratorNotes</p>
+                        </div>
+                    }
+
+                    <div class="message-status mb-4">
+                        <div class="d-flex gap-2 flex-wrap">
+                            @if (Model.IsApproved)
+                            {
+                                <span class="badge bg-success">
+                                    <i class="bi bi-check-circle me-1"></i>Approved
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-warning">
+                                    <i class="bi bi-clock me-1"></i>Pending Approval
+                                </span>
+                            }
+                            @if (Model.IsModerated)
+                            {
+                                <span class="badge bg-info">
+                                    <i class="bi bi-shield-check me-1"></i>Moderated
+                                </span>
+                            }
+                            @if (Model.IsRead && isReceiver)
+                            {
+                                <span class="badge bg-primary">
+                                    <i class="bi bi-envelope-open me-1"></i>Read
+                                </span>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="message-actions mt-4 pt-3 border-top">
+                        <div class="d-flex gap-2 flex-wrap">
+                            @if (isReceiver)
+                            {
+                                <a asp-action="Reply" asp-route-messageId="@Model.Id" class="btn btn-primary">
+                                    <i class="bi bi-reply me-2"></i>Reply
+                                </a>
+                            }
+                            <a asp-action="Index" class="btn btn-outline-secondary">
+                                <i class="bi bi-arrow-left me-2"></i>Back to Messages
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .bg-gradient-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    .message-content p {
+        font-size: 1.05rem;
+    }
+</style>
+
+=======
+@model StudentCharityHub.Models.Message
+@using StudentCharityHub.Models
+@using System.Security.Claims
+@{
+    ViewData["Title"] = "Message Details";
+    var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+    var isSender = Model.SenderId == userId;
+    var isReceiver = Model.ReceiverId == userId;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewData["Title"] - Student Charity Hub</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --coral: #ff5a5f;
+            --teal: #0d9488;
+            --cream: #fffaf0;
+            --dark: #1f2937;
+            --gray: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--cream);
+            color: var(--dark);
+            font-size: 0.95rem;
+        }
+
+        a {
+            text-decoration: none !important;
+        }
+
+        /* Hero – Same as every page */
+        .page-hero {
+            background: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.75)), url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1950&q=80') center/cover;
+            min-height: 300px;
+            display: flex;
+            align-items: center;
+            border-radius: 0 0 32px 32px;
+            position: relative;
+            overflow: hidden;
+        }
+
+            .page-hero::before {
+                content: '';
+                position: absolute;
+                inset: 0;
+                background: linear-gradient(135deg, rgba(255,90,95,0.88), rgba(13,148,136,0.82));
+            }
+
+        .hero-content {
+            position: relative;
+            text-align: center;
+            color: white;
+        }
+
+        .hero-title {
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            opacity: 0.95;
+        }
+
+        /* Message Card – Floating & Warm */
+        .message-card {
+            background: white;
+            border-radius: 28px;
+            box-shadow: 0 15px 45px rgba(0,0,0,0.1);
+            overflow: hidden;
+            margin-top: -100px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, var(--coral), var(--teal));
+            color: white;
+            padding: 2rem 2.5rem;
+            font-weight: 600;
+            font-size: 1.5rem;
+            text-align: center;
+        }
+
+            .card-header .back-btn {
+                background: rgba(255,255,255,0.22);
+                color: white;
+                border: none;
+                border-radius: 16px;
+                padding: 0.6rem 1.3rem;
+                font-weight: 500;
+                transition: all 0.3s ease;
+            }
+
+                .card-header .back-btn:hover {
+                    background: white;
+                    color: var(--teal);
+                }
+
+        .meta-row {
+            background: #ecfeff;
+            border-left: 6px solid var(--teal);
+            border-radius: 16px;
+            padding: 1.8rem 1.8rem;
+            margin-bottom: 2rem;
+        }
+
+        .meta-label {
+            font-size: 0.88rem;
+            color: var(--gray);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .meta-value {
+            font-weight: 600;
+            color: var(--dark);
+            font-size: 1.05rem;
+        }
+
+        .message-bubble {
+            background: #f8f9fa;
+            border-radius: 24px;
+            padding: 2rem 2.2rem;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--dark);
+            border: 1px solid #e9ecef;
+            position: relative;
+        }
+
+            .message-bubble::before {
+                content: '';
+                position: absolute;
+                left: 30px;
+                top: -12px;
+                width: 0;
+                height: 0;
+                border-left: 12px solid transparent;
+                border-right: 12px solid transparent;
+                border-bottom: 12px solid #f8f9fa;
+            }
+
+        .badge-custom {
+            font-size: 0.82rem;
+            padding: 0.5em 0.9em;
+            border-radius: 50px;
+        }
+
+        .btn-reply {
+            background: linear-gradient(135deg, var(--coral), var(--teal));
+            color: white;
+            font-weight: 600;
+            border-radius: 18px;
+            padding: 0.9rem 2rem;
+            box-shadow: 0 10px 30px rgba(255,90,95,0.3);
+            transition: all 0.35s ease;
+        }
+
+            .btn-reply:hover {
+                transform: translateY(-6px);
+                box-shadow: 0 20px 40px rgba(255,90,95,0.4);
+            }
+
+        .btn-back {
+            border-radius: 18px;
+            font-weight: 500;
+        }
+
+        .moderator-note {
+            background: #fff4e5;
+            border-left: 5px solid #ff9f43;
+            border-radius: 16px;
+            padding: 1.4rem;
+        }
+
+
+        {
+            font-size: 2.3rem;
+        }
+
+        .message-card {
+            margin: 1rem;
+            margin-top: -70px;
+        }
+
+        .card-header {
+            padding: 1.8rem;
+        }
+
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Hero -->
+    <section class="page-hero">
+        <div class="container hero-content">
+            <h1 class="hero-title">Message Details</h1>
+            <p class="hero-subtitle">Every word here carries hope</p>
+        </div>
+    </section>
+
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-9 col-xl-8">
+                <div class="message-card">
+
+                    <!-- Header -->
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <span>Message Details</span>
+                        <a asp-action="Index" class="btn back-btn">
+                            Back to Inbox
+                        </a>
+                    </div>
+
+                    <div class="card-body p-4 p-md-5">
+
+                        <!-- Student Context -->
+                        @if (Model.StudentId > 0 && ViewBag.Student != null)
+                        {
+                            var student = ViewBag.Student as Student;
+                            <div class="text-center mb-4">
+                                <span class="badge bg-info badge-custom">
+                                    About: <strong>@student?.FullName</strong>
+                                </span>
+                            </div>
+                        }
+
+                        <!-- Meta Info -->
+                        <div class="meta-row">
+                            <div class="row g-4">
+                                <div class="col-md-6">
+                                    <div class="meta-label">From</div>
+                                    <div class="meta-value">
+                                        @(ViewBag.Sender?.FullName ?? ViewBag.Sender?.Email ?? "Anonymous Donor")
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="meta-label">To</div>
+                                    <div class="meta-value">
+                                        @(ViewBag.Receiver?.FullName ?? ViewBag.Receiver?.Email ?? "Student")
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-md-6">
+                                    <small class="text-muted">
+                                        Sent: @Model.CreatedAt.ToString("MMMM dd, yyyy 'at' h:mm tt")
+                                    </small>
+                                </div>
+                                @if (Model.IsRead && Model.ReadAt.HasValue)
+                                {
+                                    <div class="col-md-6">
+                                        <small class="text-success">
+                                            Read: @Model.ReadAt.Value.ToString("MMMM dd, yyyy 'at' h:mm tt")
+                                        </small>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+
+                        <!-- Message Content -->
+                        <div class="my-5">
+                            <div class="message-bubble">
+                                @Model.Content
+                            </div>
+                        </div>
+
+                        <!-- Moderator Notes -->
+                        @if (!string.IsNullOrEmpty(Model.ModeratorNotes))
+                        {
+                            <div class="moderator-note mb-4">
+                                <strong>Moderator Note:</strong><br>
+                                @Model.ModeratorNotes
+                            </div>
+                        }
+
+                        <!-- Status Badges -->
+                        <div class="d-flex gap-3 flex-wrap mb-5">
+                            <span class="badge @(Model.IsApproved ? "bg-success" : "bg-warning") badge-custom">
+                                @(Model.IsApproved ? "Approved" : "Pending Review")
+                            </span>
+                            @if (Model.IsModerated)
+                            {
+                                <span class="badge bg-info badge-custom">Moderated</span>
+                            }
+                            @if (Model.IsRead)
+                            {
+                                <span class="badge bg-primary badge-custom">Read</span>
+                            }
+                        </div>
+
+                        <!-- Actions -->
+                        <div class="d-grid d-md-flex gap-3 justify-content-end">
+                            @if (isReceiver)
+                            {
+                                <a asp-action="Reply" asp-route-messageId="@Model.Id" class="btn btn-reply">
+                                    Reply to Message
+                                </a>
+                            }
+                            <a asp-action="Index" class="btn btn-outline-secondary btn-back">
+                                Back to Messages
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
+>>>>>>> origin/GateraMe

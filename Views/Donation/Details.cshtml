@@ -1,0 +1,139 @@
+<<<<<<< HEAD
+@model StudentCharityHub.Models.Donation
+@{
+    ViewData["Title"] = "Donation Details";
+}
+
+<div class="container">
+    <h1 class="mb-4">Donation Details</h1>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">Student</dt>
+                <dd class="col-sm-9">@Model.Student?.FullName (@Model.StudentId)</dd>
+
+                <dt class="col-sm-3">Amount</dt>
+                <dd class="col-sm-9">$@Model.Amount.ToString("F2")</dd>
+
+                <dt class="col-sm-3">Payment Method</dt>
+                <dd class="col-sm-9">@Model.PaymentMethod</dd>
+
+                <dt class="col-sm-3">Status</dt>
+                <dd class="col-sm-9">
+                    <span class="badge @(Model.Status == "Completed" ? "bg-success" : Model.Status == "Pending" ? "bg-warning text-dark" : "bg-secondary")">
+                        @Model.Status
+                    </span>
+                </dd>
+
+                <dt class="col-sm-3">Transaction ID</dt>
+                <dd class="col-sm-9">@Model.TransactionId</dd>
+
+                <dt class="col-sm-3">Date</dt>
+                <dd class="col-sm-9">@Model.CreatedAt.ToString("MMM dd, yyyy HH:mm")</dd>
+
+                <dt class="col-sm-3">Receipt</dt>
+                <dd class="col-sm-9">
+                    @if (!string.IsNullOrEmpty(Model.ReceiptUrl))
+                    {
+                        <a href="@Model.ReceiptUrl" target="_blank" class="btn btn-sm btn-outline-primary">View Receipt</a>
+                    }
+                    else
+                    {
+                        <span class="text-muted">Not generated</span>
+                    }
+                </dd>
+            </dl>
+        </div>
+    </div>
+
+    <div class="mt-4 d-flex gap-2">
+        <a asp-controller="Student" asp-action="Details" asp-route-id="@Model.StudentId" class="btn btn-outline-primary">Back to Student</a>
+        <a asp-action="MyDonations" class="btn btn-primary">My Donations</a>
+    </div>
+</div>
+
+
+=======
+@model StudentCharityHub.Models.Donation
+@{
+    ViewData["Title"] = "Donation Details";
+}
+
+<div class="container py-4">
+    <div class="card shadow-sm rounded-4 border-0">
+        <div class="card-header bg-primary text-white">
+            <h3 class="mb-0">Donation Details</h3>
+        </div>
+        <div class="card-body">
+            <dl class="row mb-0">
+                <dt class="col-sm-3 fw-semibold">Student</dt>
+                <dd class="col-sm-9">@Model.Student?.FullName (@Model.StudentId)</dd>
+
+                <dt class="col-sm-3 fw-semibold">Amount</dt>
+                <dd class="col-sm-9">$@Model.Amount.ToString("F2")</dd>
+
+                <dt class="col-sm-3 fw-semibold">Payment Method</dt>
+                <dd class="col-sm-9">@Model.PaymentMethod</dd>
+
+                <dt class="col-sm-3 fw-semibold">Status</dt>
+                <dd class="col-sm-9">
+                    <span class="badge @(Model.Status == "Completed" ? "bg-success" : Model.Status == "Pending" ? "bg-warning text-dark" : "bg-secondary")">
+                        @Model.Status
+                    </span>
+                </dd>
+
+                <dt class="col-sm-3 fw-semibold">Transaction ID</dt>
+                <dd class="col-sm-9">@Model.TransactionId</dd>
+
+                <dt class="col-sm-3 fw-semibold">Date</dt>
+                <dd class="col-sm-9">@Model.CreatedAt.ToString("MMM dd, yyyy HH:mm")</dd>
+
+                <dt class="col-sm-3 fw-semibold">Receipt</dt>
+                <dd class="col-sm-9">
+                    @if (!string.IsNullOrEmpty(Model.ReceiptUrl))
+                    {
+                        <a href="@Model.ReceiptUrl" target="_blank" class="btn btn-sm btn-outline-primary shadow-sm">View Receipt</a>
+                    }
+                    else
+                    {
+                        <span class="text-muted">Not generated</span>
+                    }
+                </dd>
+            </dl>
+        </div>
+    </div>
+
+    <div class="mt-4 d-flex flex-wrap gap-2">
+        <a asp-controller="Student" asp-action="Details" asp-route-id="@Model.StudentId" class="btn btn-outline-primary shadow-sm">
+            <i class="bi bi-arrow-left-circle"></i> Back to Student
+        </a>
+        <a asp-action="MyDonations" class="btn btn-primary shadow-sm">
+            <i class="bi bi-wallet2"></i> My Donations
+        </a>
+    </div>
+</div>
+
+<style>
+    .card {
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+    dt {
+        margin-bottom: 0.25rem;
+    }
+
+    dd {
+        margin-bottom: 1rem;
+    }
+
+    .btn {
+        border-radius: 0.375rem;
+    }
+</style>
+>>>>>>> origin/GateraMe

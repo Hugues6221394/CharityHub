@@ -1,0 +1,161 @@
+<<<<<<< HEAD
+@model Donation
+@{
+    ViewData["Title"] = "Make a Donation";
+    var student = ViewBag.Student as Student;
+}
+
+<div class="container">
+    <h2>Make a Donation</h2>
+    @if (student != null)
+    {
+        <div class="alert alert-info">
+            <h5>Donating to: @student.FullName</h5>
+            <p>@student.Location | Age: @student.Age</p>
+        </div>
+    }
+    <div class="row">
+        <div class="col-md-8">
+            <form asp-action="Create" method="post">
+                <input type="hidden" asp-for="StudentId" />
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="mb-3">
+                    <label asp-for="Amount" class="form-label">Amount ($)</label>
+                    <input asp-for="Amount" class="form-control" type="number" step="0.01" min="1" />
+                    <span asp-validation-for="Amount" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Payment Method</label>
+                    <div>
+                        <input type="radio" name="paymentMethod" value="PayPal" id="paypal" checked>
+                        <label for="paypal">PayPal</label>
+                    </div>
+                    <div>
+                        <input type="radio" name="paymentMethod" value="MTNMobileMoney" id="mtn">
+                        <label for="mtn">MTN Mobile Money</label>
+                    </div>
+                </div>
+                <div class="mb-3" id="phoneNumberGroup" style="display: none;">
+                    <label class="form-label">Phone Number</label>
+                    <input type="text" name="phoneNumber" class="form-control" placeholder="Enter phone number">
+                </div>
+                <div class="mb-3 form-check">
+                    <input type="checkbox" asp-for="IsRecurring" class="form-check-input" />
+                    <label asp-for="IsRecurring" class="form-check-label">Make this a recurring donation</label>
+                </div>
+                <button type="submit" class="btn btn-primary">Proceed to Payment</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.querySelectorAll('input[name="paymentMethod"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                document.getElementById('phoneNumberGroup').style.display = 
+                    this.value === 'MTNMobileMoney' ? 'block' : 'none';
+            });
+        });
+    </script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+
+
+=======
+@model Donation
+@{
+    ViewData["Title"] = "Make a Donation";
+    var student = ViewBag.Student as Student;
+}
+
+<div class="container py-4">
+    <div class="card shadow-sm rounded-4 border-0">
+        <div class="card-header bg-primary text-white">
+            <h3 class="mb-0">Make a Donation</h3>
+        </div>
+        <div class="card-body">
+
+            @if (student != null)
+            {
+                <div class="alert alert-info rounded-3 shadow-sm">
+                    <h5 class="mb-1">Donating to: <strong>@student.FullName</strong></h5>
+                    <p class="mb-0">@student.Location | Age: @student.Age</p>
+                </div>
+            }
+
+            <form asp-action="Create" method="post">
+                <input type="hidden" asp-for="StudentId" />
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <div class="mb-3">
+                    <label asp-for="Amount" class="form-label fw-semibold">Amount ($)</label>
+                    <input asp-for="Amount" class="form-control shadow-sm" type="number" step="0.01" min="1" />
+                    <span asp-validation-for="Amount" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Payment Method</label>
+                    <div class="form-check">
+                        <input type="radio" name="paymentMethod" value="PayPal" id="paypal" class="form-check-input" checked>
+                        <label for="paypal" class="form-check-label">PayPal</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" name="paymentMethod" value="MTNMobileMoney" id="mtn" class="form-check-input">
+                        <label for="mtn" class="form-check-label">MTN Mobile Money</label>
+                    </div>
+                </div>
+
+                <div class="mb-3" id="phoneNumberGroup" style="display: none;">
+                    <label class="form-label fw-semibold">Phone Number</label>
+                    <input type="text" name="phoneNumber" class="form-control shadow-sm" placeholder="Enter phone number">
+                </div>
+
+                <div class="mb-3 form-check">
+                    <input type="checkbox" asp-for="IsRecurring" class="form-check-input" />
+                    <label asp-for="IsRecurring" class="form-check-label">Make this a recurring donation</label>
+                </div>
+
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary shadow-sm">Proceed to Payment</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.querySelectorAll('input[name="paymentMethod"]').forEach(radio => {
+            radio.addEventListener('change', function () {
+                document.getElementById('phoneNumberGroup').style.display =
+                    this.value === 'MTNMobileMoney' ? 'block' : 'none';
+            });
+        });
+    </script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+<style>
+    .card {
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+    .form-control, .form-check-input {
+        border-radius: 0.375rem;
+    }
+
+    .btn-primary {
+        border-radius: 0.375rem;
+        font-weight: 500;
+    }
+</style>
+>>>>>>> origin/GateraMe

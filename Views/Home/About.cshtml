@@ -1,0 +1,286 @@
+<<<<<<< HEAD
+@{
+    ViewData["Title"] = "About";
+}
+
+<div class="container">
+    <h1>About Student Charity Hub</h1>
+    <p>Student Charity Hub is a transparent platform connecting donors with students in need of educational sponsorship.</p>
+</div>
+
+
+
+=======
+@{
+    ViewData["Title"] = "About";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewData["Title"] - Student Charity Hub</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --coral: #ff5a5f;
+            --coral-light: #ff7a7d;
+            --teal: #0d9488;
+            --cream: #fffaf0;
+            --dark: #1f2937;
+            --gray: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--cream);
+            color: var(--dark);
+            line-height: 1.7;
+        }
+
+        /* Hero-style Header */
+        .about-hero {
+            background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.65)), url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&q=80') center/cover no-repeat;
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+
+            .about-hero::before {
+                content: '';
+                position: absolute;
+                inset: 0;
+                background: linear-gradient(135deg, rgba(255,90,95,0.75), rgba(13,148,136,0.65));
+            }
+
+        .about-hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .logo-hero {
+            width: 90px;
+            height: 90px;
+            margin: 0 auto 1.5rem;
+            background: white;
+            color: var(--coral);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.8rem;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+        }
+
+        .about-hero h1 {
+            font-size: 3.6rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            text-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+
+        .about-hero p {
+            font-size: 1.4rem;
+            max-width: 700px;
+            margin: 1.5rem auto;
+            opacity: 0.95;
+        }
+
+        /* Main Content */
+        .about-main {
+            padding: 100px 0;
+            background: white;
+        }
+
+        .section-title {
+            font-size: 2.4rem;
+            font-weight: 800;
+            color: var(--dark);
+            position: relative;
+            margin-bottom: 3rem;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+            .section-title::before {
+                content: '';
+                width: 18px;
+                height: 18px;
+                background: var(--coral);
+                border-radius: 50%;
+                flex-shrink: 0;
+            }
+
+            .section-title.teal::before {
+                background: var(--teal);
+            }
+
+        .text-large {
+            font-size: 1.2rem;
+            color: #374151;
+            line-height: 1.8;
+            max-width: 700px;
+        }
+
+        .steps {
+            margin-top: 3rem;
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            font-size: 1.2rem;
+            padding: 1.2rem 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+            .step:last-child {
+                border-bottom: none;
+            }
+
+        .num {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--coral);
+            color: white;
+            font-weight: 900;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .step:nth-child(2) .num {
+            background: var(--teal);
+        }
+
+        .step:nth-child(3) .num {
+            background: #8b5cf6;
+        }
+
+        .step:nth-child(4) .num {
+            background: #f59e0b;
+            color: #1f2937;
+        }
+
+        .img-emotion {
+            border-radius: 24px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+            transition: transform 0.5s ease;
+        }
+
+            .img-emotion:hover {
+                transform: translateY(-12px);
+            }
+
+        .btn-vivid {
+            background: linear-gradient(135deg, var(--coral), var(--teal));
+            color: white;
+            font-weight: 700;
+            font-size: 1.3rem;
+            padding: 1.1rem 3.5rem;
+            border-radius: 50px;
+            box-shadow: 0 15px 35px rgba(255,90,95,0.4);
+            transition: all 0.4s ease;
+            display: inline-block;
+            margin-top: 3rem;
+        }
+
+            .btn-vivid:hover {
+                transform: translateY(-6px);
+                box-shadow: 0 25px 50px rgba(255,90,95,0.5);
+                color: white;
+            }
+
+       
+        {
+            font-size: 2.8rem;
+        }
+
+        .about-hero p {
+            font-size: 1.2rem;
+        }
+
+        .section-title {
+            font-size: 2rem;
+        }
+
+        .about-main {
+            padding: 60px 0;
+        }
+
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Hero Header -->
+    <section class="about-hero">
+        <div class="container about-hero-content">
+            <div class="logo-hero">
+                <i class="bi bi-mortarboard-fill"></i>
+            </div>
+            <h1>About Student Charity Hub</h1>
+            <p>We turn kindness into degrees — connecting generous hearts with brilliant students who just need a chance.</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="about-main">
+        <div class="container">
+            <div class="row g-5 align-items-center">
+                <!-- Image -->
+                <div class="col-lg-5 text-center">
+                    <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+                         alt="Happy graduating students" class="img-emotion img-fluid">
+                </div>
+
+                <!-- Content -->
+                <div class="col-lg-7">
+                    <h2 class="section-title">Our Mission</h2>
+                    <p class="text-large">
+                        Every bright mind deserves a fair shot. We connect generous donors directly with talented students who need help to pay for tuition, books, and living costs — <strong>no middlemen, no fees, just real impact</strong>.
+                    </p>
+
+                    <h2 class="section-title teal mt-5">How It Works</h2>
+                    <div class="steps">
+                        <div class="step">
+                            <div class="num">1</div>
+                            <div>Students share their real stories and dreams</div>
+                        </div>
+                        <div class="step">
+                            <div class="num">2</div>
+                            <div>You choose exactly who to support</div>
+                        </div>
+                        <div class="step">
+                            <div class="num">3</div>
+                            <div><strong>100% of your donation</strong> reaches the student directly</div>
+                        </div>
+                        <div class="step">
+                            <div class="num">4</div>
+                            <div>They send personal updates and heartfelt thanks</div>
+                        </div>
+                    </div>
+
+                    <div class="text-center">
+                        <a asp-controller="Home" asp-action="Index" class="btn-vivid">
+                            Start Changing Lives Today
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>
+>>>>>>> origin/GateraMe

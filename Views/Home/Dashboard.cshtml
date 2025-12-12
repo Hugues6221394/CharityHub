@@ -1,0 +1,94 @@
+<<<<<<< HEAD
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<StudentCharityHub.Models.ApplicationUser> UserManager
+@{
+    ViewData["Title"] = "Dashboard";
+    var user = await UserManager.GetUserAsync(User);
+    var roles = await UserManager.GetRolesAsync(user!);
+    var isAdmin = roles.Contains("Admin");
+    var isStudent = roles.Contains("Student");
+    var isDonor = roles.Contains("Donor");
+}
+
+@if (isAdmin)
+{
+    @await Html.PartialAsync("_AdminDashboard")
+}
+else if (isStudent)
+{
+    @await Html.PartialAsync("_StudentDashboard")
+}
+else if (isDonor)
+{
+    @await Html.PartialAsync("_DonorDashboard")
+}
+else
+{
+    <div class="container">
+        <div class="alert alert-info">
+            <h4>Welcome!</h4>
+            <p>Please wait while we redirect you to your dashboard...</p>
+        </div>
+    </div>
+    <script>
+        setTimeout(function() {
+            window.location.href = '@Url.Action("Index", "Home")';
+        }, 2000);
+    </script>
+}
+=======
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<StudentCharityHub.Models.ApplicationUser> UserManager
+@{
+    ViewData["Title"] = "Dashboard";
+    var user = await UserManager.GetUserAsync(User);
+    var roles = await UserManager.GetRolesAsync(user!);
+    var isAdmin = roles.Contains("Admin");
+    var isStudent = roles.Contains("Student");
+    var isDonor = roles.Contains("Donor");
+}
+
+<div class="container py-5">
+    @if (isAdmin)
+    {
+        @await Html.PartialAsync("_AdminDashboard")
+    }
+    else if (isStudent)
+    {
+        @await Html.PartialAsync("_StudentDashboard")
+    }
+    else if (isDonor)
+    {
+        @await Html.PartialAsync("_DonorDashboard")
+    }
+    else
+    {
+        <div class="text-center my-5">
+            <div class="alert shadow-sm rounded-4 p-4" style="background-color:#003366; color:white;">
+                <h4 class="fw-bold mb-3">Welcome!</h4>
+                <p class="lead">We are determining your dashboard. Please wait...</p>
+                <div class="spinner-border mt-3" role="status" style="color:white;">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            setTimeout(function () {
+                window.location.href = '@Url.Action("Index", "Home")';
+            }, 2000);
+        </script>
+    }
+</div>
+
+<style>
+    .alert p.lead {
+        font-size: 1.15rem;
+        color: #cce0ff; /* Light shade of blue for readability */
+    }
+
+    .alert h4 {
+        color: #ffffff; /* White for header */
+    }
+</style>
+>>>>>>> origin/GateraMe

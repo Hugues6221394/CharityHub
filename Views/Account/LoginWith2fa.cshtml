@@ -1,0 +1,113 @@
+<<<<<<< HEAD
+@model LoginWith2faViewModel
+@{
+    ViewData["Title"] = "Two-Factor Authentication";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h3 class="text-center mb-0">Two-Factor Authentication</h3>
+            </div>
+            <div class="card-body">
+                <p>Enter the code from your authenticator app:</p>
+                <form asp-action="LoginWith2fa" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="mb-3">
+                        <label asp-for="TwoFactorCode" class="form-label"></label>
+                        <input asp-for="TwoFactorCode" class="form-control" autocomplete="off" />
+                        <span asp-validation-for="TwoFactorCode" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3 form-check">
+                        <input asp-for="RememberMachine" class="form-check-input" />
+                        <label asp-for="RememberMachine" class="form-check-label"></label>
+                    </div>
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">Verify</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+
+
+=======
+@model LoginWith2faViewModel
+@{
+    ViewData["Title"] = "Two-Factor Authentication";
+}
+
+<div class="container py-5">
+
+    <div class="text-center mb-4">
+        <h2 class="fw-bold text-gradient">Two-Factor Authentication</h2>
+        <p class="text-muted">Enter the code from your authenticator app to continue</p>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-body p-4">
+
+                    <p class="mb-3 fw-medium">Please enter your authenticator code:</p>
+
+                    <form asp-action="LoginWith2fa" method="post">
+
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                        <!-- 2FA Code -->
+                        <div class="mb-4">
+                            <label asp-for="TwoFactorCode" class="form-label fw-semibold">
+                                Authentication Code
+                            </label>
+                            <input asp-for="TwoFactorCode"
+                                   class="form-control form-control-lg rounded-3"
+                                   autocomplete="off" />
+                            <span asp-validation-for="TwoFactorCode" class="text-danger"></span>
+                        </div>
+
+                        <!-- Remember this machine -->
+                        <div class="mb-3 form-check">
+                            <input asp-for="RememberMachine" class="form-check-input" />
+                            <label asp-for="RememberMachine" class="form-check-label fw-medium">
+                                Remember this device
+                            </label>
+                        </div>
+
+                        <!-- Submit -->
+                        <button type="submit" class="btn btn-primary w-100 btn-lg rounded-3 shadow-sm">
+                            Verify
+                        </button>
+
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<style>
+    .text-gradient {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+</style>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+>>>>>>> origin/GateraMe

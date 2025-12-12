@@ -1,0 +1,91 @@
+<<<<<<< HEAD
+@model IEnumerable<StudentCharityHub.Models.ApplicationUser>
+@{
+    ViewData["Title"] = "My Donors";
+}
+
+<div class="container">
+    <h1 class="mb-4">My Donors</h1>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            @if (Model.Any())
+            {
+                <div class="table-responsive">
+                    <table class="table table-striped align-middle">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Joined</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var donor in Model)
+                            {
+                                <tr>
+                                    <td>@donor.FirstName @donor.LastName</td>
+                                    <td>@donor.Email</td>
+                                    <td>@donor.PhoneNumber</td>
+                                    <td>@donor.CreatedAt.ToString("yyyy-MM-dd")</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <p class="text-muted mb-0">No donors yet.</p>
+            }
+        </div>
+    </div>
+</div>
+
+=======
+@model IEnumerable<StudentCharityHub.Models.ApplicationUser>
+@{
+    ViewData["Title"] = "My Donors";
+}
+
+<div class="container">
+    <h1 class="mb-4">My Donors</h1>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            @if (Model.Any())
+            {
+                <div class="table-responsive">
+                    <table class="table table-striped align-middle">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Joined</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var donor in Model)
+                            {
+                                <tr>
+                                    <td>@donor.FirstName @donor.LastName</td>
+                                    <td>@donor.Email</td>
+                                    <td>@donor.PhoneNumber</td>
+                                    <td>@donor.CreatedAt.ToString("yyyy-MM-dd")</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <p class="text-muted mb-0">No donors yet.</p>
+            }
+        </div>
+    </div>
+</div>
+
+>>>>>>> origin/GateraMe

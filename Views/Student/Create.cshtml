@@ -1,0 +1,191 @@
+<<<<<<< HEAD
+@model Student
+@{
+    ViewData["Title"] = "Create Student";
+}
+
+<div class="container">
+    <h2>Create Student</h2>
+    <form asp-action="Create" method="post" enctype="multipart/form-data">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="mb-3">
+            <label class="form-label">Select Student User Account</label>
+            @{
+                var studentUsers = ViewBag.StudentUsers as List<StudentCharityHub.Models.ApplicationUser> ?? new();
+            }
+            @if (studentUsers.Any())
+            {
+                <select asp-for="ApplicationUserId" class="form-select">
+                    <option value="">-- Select User --</option>
+                    @foreach (var user in studentUsers)
+                    {
+                        <option value="@user.Id">@user.FirstName @user.LastName (@user.Email)</option>
+                    }
+                </select>
+                <span asp-validation-for="ApplicationUserId" class="text-danger"></span>
+            }
+            else
+            {
+                <div class="alert alert-warning">
+                    There are no available users with the Student role. Please create a student account first.
+                </div>
+            }
+        </div>
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label asp-for="FullName" class="form-label"></label>
+                <input asp-for="FullName" class="form-control" />
+                <span asp-validation-for="FullName" class="text-danger"></span>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label asp-for="Age" class="form-label"></label>
+                <input asp-for="Age" class="form-control" type="number" />
+                <span asp-validation-for="Age" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Location" class="form-label"></label>
+            <input asp-for="Location" class="form-control" />
+            <span asp-validation-for="Location" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Story" class="form-label"></label>
+            <textarea asp-for="Story" class="form-control" rows="5"></textarea>
+            <span asp-validation-for="Story" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="AcademicBackground" class="form-label"></label>
+            <textarea asp-for="AcademicBackground" class="form-control" rows="3"></textarea>
+            <span asp-validation-for="AcademicBackground" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="DreamCareer" class="form-label"></label>
+            <input asp-for="DreamCareer" class="form-control" />
+            <span asp-validation-for="DreamCareer" class="text-danger"></span>
+        </div>
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label asp-for="FundingGoal" class="form-label"></label>
+                <input asp-for="FundingGoal" class="form-control" type="number" step="0.01" />
+                <span asp-validation-for="FundingGoal" class="text-danger"></span>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Photo</label>
+                <input type="file" name="photo" class="form-control" accept="image/*" />
+            </div>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Documents (Transcripts, Certificates)</label>
+            <input type="file" name="documents" class="form-control" multiple />
+        </div>
+        <div class="mb-3 form-check">
+            <input asp-for="IsVisible" class="form-check-input" checked />
+            <label asp-for="IsVisible" class="form-check-label">Visible to public</label>
+        </div>
+        <button type="submit" class="btn btn-primary">Create</button>
+        <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+
+
+=======
+@model Student
+@{
+    ViewData["Title"] = "Create Student";
+}
+
+<div class="container">
+    <h2>Create Student</h2>
+    <form asp-action="Create" method="post" enctype="multipart/form-data">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="mb-3">
+            <label class="form-label">Select Student User Account</label>
+            @{
+                var studentUsers = ViewBag.StudentUsers as List<StudentCharityHub.Models.ApplicationUser> ?? new();
+            }
+            @if (studentUsers.Any())
+            {
+                <select asp-for="ApplicationUserId" class="form-select">
+                    <option value="">-- Select User --</option>
+                    @foreach (var user in studentUsers)
+                    {
+                        <option value="@user.Id">@user.FirstName @user.LastName (@user.Email)</option>
+                    }
+                </select>
+                <span asp-validation-for="ApplicationUserId" class="text-danger"></span>
+            }
+            else
+            {
+                <div class="alert alert-warning">
+                    There are no available users with the Student role. Please create a student account first.
+                </div>
+            }
+        </div>
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label asp-for="FullName" class="form-label"></label>
+                <input asp-for="FullName" class="form-control" />
+                <span asp-validation-for="FullName" class="text-danger"></span>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label asp-for="Age" class="form-label"></label>
+                <input asp-for="Age" class="form-control" type="number" />
+                <span asp-validation-for="Age" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Location" class="form-label"></label>
+            <input asp-for="Location" class="form-control" />
+            <span asp-validation-for="Location" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Story" class="form-label"></label>
+            <textarea asp-for="Story" class="form-control" rows="5"></textarea>
+            <span asp-validation-for="Story" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="AcademicBackground" class="form-label"></label>
+            <textarea asp-for="AcademicBackground" class="form-control" rows="3"></textarea>
+            <span asp-validation-for="AcademicBackground" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="DreamCareer" class="form-label"></label>
+            <input asp-for="DreamCareer" class="form-control" />
+            <span asp-validation-for="DreamCareer" class="text-danger"></span>
+        </div>
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label asp-for="FundingGoal" class="form-label"></label>
+                <input asp-for="FundingGoal" class="form-control" type="number" step="0.01" />
+                <span asp-validation-for="FundingGoal" class="text-danger"></span>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Photo</label>
+                <input type="file" name="photo" class="form-control" accept="image/*" />
+            </div>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Documents (Transcripts, Certificates)</label>
+            <input type="file" name="documents" class="form-control" multiple />
+        </div>
+        <div class="mb-3 form-check">
+            <input asp-for="IsVisible" class="form-check-input" checked />
+            <label asp-for="IsVisible" class="form-check-label">Visible to public</label>
+        </div>
+        <button type="submit" class="btn btn-primary">Create</button>
+        <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+
+
+>>>>>>> origin/GateraMe

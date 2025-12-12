@@ -1,0 +1,313 @@
+<<<<<<< HEAD
+@model StudentCharityHub.Models.ApplicationUser
+@{
+    ViewData["Title"] = "Edit User";
+    var allRoles = ViewBag.AllRoles as List<string> ?? new();
+    var userRoles = ViewBag.UserRoles as IList<string> ?? new List<string>();
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Edit User</h5>
+                </div>
+                <div class="card-body">
+                    <form asp-action="EditUser" method="post">
+                        <input type="hidden" asp-for="Id" />
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="FirstName" class="form-label"></label>
+                                <input asp-for="FirstName" class="form-control" />
+                                <span asp-validation-for="FirstName" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="LastName" class="form-label"></label>
+                                <input asp-for="LastName" class="form-control" />
+                                <span asp-validation-for="LastName" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Email" class="form-label"></label>
+                            <input asp-for="Email" class="form-control" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="PhoneNumber" class="form-label"></label>
+                            <input asp-for="PhoneNumber" class="form-control" />
+                            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Roles</label>
+                            <select class="form-select" name="roles" multiple size="3">
+                                @foreach (var role in allRoles)
+                                {
+                                    <option value="@role" selected="@(userRoles.Contains(role))">@role</option>
+                                }
+                            </select>
+                            <small class="text-muted">Hold Ctrl/Command to select multiple roles.</small>
+                        </div>
+
+                        <div class="form-check form-switch mb-3">
+                            <input class="form-check-input" type="checkbox" asp-for="IsActive" />
+                            <label class="form-check-label" asp-for="IsActive">Active</label>
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <a asp-action="Users" class="btn btn-outline-secondary">Back</a>
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+=======
+@model StudentCharityHub.Models.ApplicationUser
+@{
+    ViewData["Title"] = "Edit User";
+    var allRoles = ViewBag.AllRoles as List<string> ?? new();
+    var userRoles = ViewBag.UserRoles as IList<string> ?? new List<string>();
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewData["Title"] - Student Charity Hub</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --coral: #ff5a5f;
+            --teal: #0d9488;
+            --cream: #fffaf0;
+            --dark: #1f2937;
+            --gray: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--cream);
+            color: var(--dark);
+            font-size: 0.95rem;
+        }
+
+        a {
+            text-decoration: none !important;
+        }
+
+        /* Hero */
+        .page-hero {
+            background: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.75)), url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1950&q=80') center/cover;
+            min-height: 260px;
+            display: flex;
+            align-items: center;
+            border-radius: 0 0 32px 32px;
+            position: relative;
+            overflow: hidden;
+        }
+
+            .page-hero::before {
+                content: '';
+                position: absolute;
+                inset: 0;
+                background: linear-gradient(135deg, rgba(255,90,95,0.88), rgba(13,148,136,0.78));
+            }
+
+        .hero-content {
+            position: relative;
+            text-align: center;
+            color: white;
+        }
+
+        .hero-title {
+            font-size: 2.4rem;
+            font-weight: 700;
+            margin-bottom: 0.4rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+
+        /* Form Card – Minimal & Floating */
+        .form-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            overflow: hidden;
+            margin-top: -80px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .form-header {
+            background: linear-gradient(135deg, var(--coral), var(--teal));
+            color: white;
+            padding: 1.4rem 2rem;
+            font-weight: 600;
+            font-size: 1.2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+            .form-header .btn {
+                background: rgba(255,255,255,0.22);
+                border: none;
+                font-size: 0.9rem;
+            }
+
+                .form-header .btn:hover {
+                    background: white;
+                    color: var(--teal);
+                }
+
+        .form-control, .form-select {
+            border-radius: 12px;
+            padding: 0.75rem 1rem;
+            font-size: 0.95rem;
+            border: 1.5px solid #e2e8f0;
+        }
+
+            .form-control:focus, .form-select:focus {
+                border-color: var(--coral);
+                box-shadow: 0 0 0 4px rgba(255,90,95,0.12);
+            }
+
+        label {
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .btn-save {
+            background: linear-gradient(135deg, var(--coral), var(--teal));
+            color: white;
+            font-weight: 600;
+            border-radius: 16px;
+            padding: 0.85rem 2rem;
+            transition: all 0.3s ease;
+        }
+
+            .btn-save:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 10px 25px rgba(255,90,95,0.3);
+            }
+
+      
+
+        {
+            font-size: 2rem;
+        }
+
+        .form-card {
+            margin: 1rem;
+            margin-top: -60px;
+        }
+
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Hero -->
+    <section class="page-hero">
+        <div class="container hero-content">
+            <h1 class="hero-title">Edit User</h1>
+            <p class="hero-subtitle">Update profile and permissions</p>
+        </div>
+    </section>
+
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="form-card">
+                    <div class="form-header">
+                        <span>Edit @Model.FirstName @Model.LastName</span>
+                        <a asp-action="Users" class="btn btn-light btn-sm">Back</a>
+                    </div>
+
+                    <div class="card-body p-4 p-md-5">
+                        <form asp-action="EditUser" method="post">
+                            <input type="hidden" asp-for="Id" />
+                            <div asp-validation-summary="ModelOnly" class="alert alert-danger mb-4"></div>
+
+                            <div class="row g-4">
+                                <div class="col-md-6">
+                                    <label asp-for="FirstName">First Name</label>
+                                    <input asp-for="FirstName" class="form-control" />
+                                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-6">
+                                    <label asp-for="LastName">Last Name</label>
+                                    <input asp-for="LastName" class="form-control" />
+                                    <span asp-validation-for="LastName" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="row g-4 mt-2">
+                                <div class="col-md-6">
+                                    <label asp-for="Email">Email</label>
+                                    <input asp-for="Email" class="form-control" />
+                                    <span asp-validation-for="Email" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-6">
+                                    <label asp-for="PhoneNumber">Phone</label>
+                                    <input asp-for="PhoneNumber" class="form-control" />
+                                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="mt-4">
+                                <label class="form-label fw-bold">Roles</label>
+                                <select class="form-select" name="roles" multiple size="4">
+                                    @foreach (var role in allRoles)
+                                    {
+                                        <option value="@role" selected="@(userRoles.Contains(role))">@role</option>
+                                    }
+                                </select>
+                                <small class="text-muted">Hold Ctrl/Cmd to select multiple roles</small>
+                            </div>
+
+                            <div class="form-check form-switch mt-4">
+                                <input class="form-check-input" type="checkbox" asp-for="IsActive" id="isActive" />
+                                <label class="form-check-label fw-semibold" for="isActive">
+                                    @(Model.IsActive ? "User is active" : "User is inactive")
+                                </label>
+                            </div>
+
+                            <div class="d-flex justify-content-end gap-3 mt-5">
+                                <a asp-action="Users" class="btn btn-outline-secondary px-4">Cancel</a>
+                                <button type="submit" class="btn btn-save px-5">Save Changes</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @section Scripts {
+        @{
+            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
+    }
+</body>
+</html>
+>>>>>>> origin/GateraMe

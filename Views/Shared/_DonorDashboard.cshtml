@@ -1,0 +1,485 @@
+<<<<<<< HEAD
+@using StudentCharityHub.Models
+@using System.Security.Claims
+@inject Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> UserManager
+@inject StudentCharityHub.Repositories.IUnitOfWork UnitOfWork
+@{
+    var userId = User.FindFirstValue(System.Security.Claims.ClaimTypes.NameIdentifier);
+    var user = await UserManager.FindByIdAsync(userId!);
+    var donations = await UnitOfWork.Donations.FindAsync(d => d.DonorId == userId && d.Status == "Completed");
+    var totalDonated = donations.Sum(d => d.Amount);
+    var sponsoredCount = donations.Select(d => d.StudentId).Distinct().Count();
+    var recentDonations = donations.OrderByDescending(d => d.CreatedAt).Take(5).ToList();
+}
+
+<div class="container-fluid py-4">
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h1 class="h2 mb-1 fw-bold text-primary">
+                        <i class="bi bi-heart-fill me-2"></i>Donor Dashboard
+                    </h1>
+                    <p class="text-muted mb-0">Welcome back, @(user?.FirstName ?? "Donor")!</p>
+                </div>
+                <div>
+                    <a asp-controller="Account" asp-action="Manage" class="btn btn-outline-primary me-2">
+                        <i class="bi bi-gear me-1"></i>Settings
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4 mb-4">
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm h-100 bg-gradient-primary text-white">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div>
+                            <h6 class="text-white-50 mb-1">Total Donated</h6>
+                            <h3 class="mb-0">$@totalDonated.ToString("F2")</h3>
+                        </div>
+                        <i class="bi bi-cash-coin fs-1 opacity-50"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm h-100 bg-gradient-success text-white">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div>
+                            <h6 class="text-white-50 mb-1">Sponsored Students</h6>
+                            <h3 class="mb-0">@sponsoredCount</h3>
+                        </div>
+                        <i class="bi bi-people-fill fs-1 opacity-50"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm h-100 bg-gradient-info text-white">
+                <div class="card-body d-flex flex-column">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div>
+                            <h6 class="text-white-50 mb-1">My Donations</h6>
+                            <h3 class="mb-0">@donations.Count()</h3>
+                        </div>
+                        <i class="bi bi-receipt fs-1 opacity-50"></i>
+                    </div>
+                    <a asp-controller="Donation" asp-action="MyDonations" class="btn btn-light btn-sm mt-auto">
+                        <i class="bi bi-arrow-right me-1"></i>View All
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm h-100 bg-gradient-warning text-white">
+                <div class="card-body d-flex flex-column">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div>
+                            <h6 class="text-white-50 mb-1">Messages</h6>
+                            <h3 class="mb-0">Chat</h3>
+                        </div>
+                        <i class="bi bi-envelope-heart-fill fs-1 opacity-50"></i>
+                    </div>
+                    <a asp-controller="Messages" asp-action="Index" class="btn btn-light btn-sm mt-auto">
+                        <i class="bi bi-arrow-right me-1"></i>View Messages
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-md-6">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-white border-bottom">
+                    <h5 class="mb-0">
+                        <i class="bi bi-lightning-charge-fill text-warning me-2"></i>Quick Actions
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-grid gap-2">
+                        <a asp-controller="Student" asp-action="Index" class="btn btn-outline-primary text-start">
+                            <i class="bi bi-search me-2"></i>Browse Students
+                        </a>
+                        <a asp-controller="Donor" asp-action="MySponsoredStudents" class="btn btn-outline-success text-start">
+                            <i class="bi bi-people-fill me-2"></i>My Sponsored Students
+                        </a>
+                        <a asp-controller="Donation" asp-action="MyDonations" class="btn btn-outline-info text-start">
+                            <i class="bi bi-receipt me-2"></i>My Donations
+                        </a>
+                        <a asp-controller="Messages" asp-action="Index" class="btn btn-outline-warning text-start">
+                            <i class="bi bi-envelope-heart me-2"></i>View Messages
+                        </a>
+                        <a asp-controller="Notifications" asp-action="Index" class="btn btn-outline-secondary text-start">
+                            <i class="bi bi-bell me-2"></i>View Notifications
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-white border-bottom d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">
+                        <i class="bi bi-clock-history text-info me-2"></i>Recent Donations
+                    </h5>
+                    <a asp-controller="Donation" asp-action="MyDonations" class="btn btn-sm btn-outline-primary">
+                        View All
+                    </a>
+                </div>
+                <div class="card-body">
+                    @if (recentDonations.Any())
+                    {
+                        <ul class="list-group list-group-flush">
+                            @foreach (var donation in recentDonations)
+                            {
+                                <li class="list-group-item px-0 d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <strong class="text-primary">$@donation.Amount.ToString("F2")</strong>
+                                        <small class="text-muted d-block">@donation.PaymentMethod - @donation.CreatedAt.ToString("MMM dd, yyyy")</small>
+                                    </div>
+                                    <a asp-controller="Student" asp-action="Details" asp-route-id="@donation.StudentId" class="btn btn-sm btn-outline-primary">
+                                        View Student
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        <p class="text-muted mb-0 text-center py-3">
+                            <i class="bi bi-inbox me-2"></i>No donations yet. Start making a difference!
+                        </p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .bg-gradient-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    .bg-gradient-success {
+        background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    }
+    .bg-gradient-info {
+        background: linear-gradient(135deg, #3494E6 0%, #EC6EAD 100%);
+    }
+    .bg-gradient-warning {
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    }
+</style>
+
+=======
+@using StudentCharityHub.Models
+@using System.Security.Claims
+@inject Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> UserManager
+@inject StudentCharityHub.Repositories.IUnitOfWork UnitOfWork
+@{
+    var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+    var user = await UserManager.FindByIdAsync(userId!);
+    var donations = await UnitOfWork.Donations.FindAsync(d => d.DonorId == userId && d.Status == "Completed");
+    var totalDonated = donations.Sum(d => d.Amount);
+    var sponsoredCount = donations.Select(d => d.StudentId).Distinct().Count();
+    var recentDonations = donations.OrderByDescending(d => d.CreatedAt).Take(5).ToList();
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Donor Dashboard - Student Charity Hub</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --coral: #ff5a5f;
+            --teal: #0d9488;
+            --cream: #fffaf0;
+            --dark: #1f2937;
+            --gray: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--cream);
+            color: var(--dark);
+            font-size: 0.95rem;
+        }
+
+        a {
+            text-decoration: none !important;
+        }
+
+            a:hover {
+                opacity: 0.85;
+            }
+
+        /* Clean Hero */
+        .donor-hero {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.75)), url('https://images.unsplash.com/photo-1593113598332-cd288d649433?auto=format&fit=crop&w=1950&q=80') center/cover;
+            min-height: 260px;
+            display: flex;
+            align-items: center;
+            border-radius: 0 0 32px 32px;
+            position: relative;
+            overflow: hidden;
+        }
+
+            .donor-hero::before {
+                content: '';
+                position: absolute;
+                inset: 0;
+                background: linear-gradient(135deg, rgba(255,90,95,0.88), rgba(13,148,136,0.78));
+            }
+
+        .hero-content {
+            position: relative;
+            text-align: center;
+            color: white;
+        }
+
+        .hero-title {
+            font-size: 2.4rem;
+            font-weight: 700;
+            margin-bottom: 0.4rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+
+        /* Minimal Impact Cards */
+        .impact-card {
+            background: white;
+            border-radius: 20px;
+            padding: 1.8rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease;
+            height: 100%;
+            position: relative;
+        }
+
+            .impact-card:hover {
+                transform: translateY(-6px);
+            }
+
+        .impact-header {
+            background: linear-gradient(135deg, var(--coral), var(--teal));
+            color: white;
+            padding: 1.6rem;
+            border-radius: 16px;
+            text-align: center;
+            margin: -1.8rem -1.8rem 1.5rem -1.8rem;
+        }
+
+        .impact-value {
+            font-size: 700 2.4rem / 1 'Inter';
+            margin: 0;
+        }
+
+        .impact-label {
+            font-size: 0.95rem;
+            opacity: 0.9;
+            margin-top: 0.3rem;
+        }
+
+        .impact-icon {
+            font-size: 2.8rem;
+            opacity: 0.15;
+            position: absolute;
+            right: 1.2rem;
+            bottom: 0.8rem;
+        }
+
+        /* Panels */
+        .panel {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+
+        .panel-header {
+            background: linear-gradient(135deg, var(--coral), var(--teal));
+            color: white;
+            padding: 1rem 1.5rem;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .action-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+        }
+
+        .action-btn {
+            background: #fff8f5;
+            color: var(--dark);
+            font-weight: 500;
+            padding: 1.1rem 1.3rem;
+            border-radius: 16px;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+            .action-btn:hover {
+                background: var(--coral);
+                color: white;
+                transform: translateY(-4px);
+            }
+
+        .donation-item {
+            padding: 0.9rem 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+            .donation-item:last-child {
+                border-bottom: none;
+            }
+
+        .donation-amount {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--coral);
+        }
+
+        
+        {
+            font-size: 2rem;
+        }
+
+        .impact-card {
+            margin-bottom: 1.5rem;
+        }
+
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Clean Hero -->
+    <section class="donor-hero">
+        <div class="container hero-content">
+            <h1 class="hero-title">Thank You, @(user?.FirstName ?? "Champion")</h1>
+            <p class="hero-subtitle">Your kindness is changing lives, one student at a time.</p>
+        </div>
+    </section>
+
+    <div class="container py-5">
+
+        <!-- Impact Cards -->
+        <div class="row g-4 mb-5">
+            <div class="col-md-3">
+                <div class="impact-card position-relative">
+                    <div class="impact-header position-relative">
+                        <div class="impact-value">$@totalDonated.ToString("N0")</div>
+                        <div class="impact-label">Total Donated</div>
+                        <i class="bi bi-cash-coin impact-icon"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="impact-card position-relative">
+                    <div class="impact-header position-relative">
+                        <div class="impact-value">@sponsoredCount</div>
+                        <div class="impact-label">Students Supported</div>
+                        <i class="bi bi-people-fill impact-icon"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="impact-card position-relative">
+                    <div class="impact-header position-relative">
+                        <div class="impact-value">@donations.Count()</div>
+                        <div class="impact-label">Contributions Made</div>
+                        <i class="bi bi-receipt impact-icon"></i>
+                    </div>
+                    <div class="text-center mt-3">
+                        <a asp-controller="Donation" asp-action="MyDonations" class="btn btn-impact small">View All</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="impact-card position-relative">
+                    <div class="impact-header position-relative">
+                        <div class="impact-value">Connect</div>
+                        <div class="impact-label">Messages</div>
+                        <i class="bi bi-envelope-heart-fill impact-icon"></i>
+                    </div>
+                    <div class="text-center mt-3">
+                        <a asp-controller="Messages" asp-action="Index" class="btn btn-impact small">Open Inbox</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions + Recent Donations -->
+        <div class="row g-4">
+            <!-- Quick Actions -->
+            <div class="col-lg-6">
+                <div class="panel">
+                    <div class="panel-header">Quick Actions</div>
+                    <div class="p-4">
+                        <div class="action-grid">
+                            <a asp-controller="Student" asp-action="Index" class="action-btn">Browse Students</a>
+                            <a asp-controller="Donor" asp-action="MySponsoredStudents" class="action-btn">My Students</a>
+                            <a asp-controller="Donation" asp-action="MyDonations" class="action-btn">Donation History</a>
+                            <a asp-controller="Messages" asp-action="Index" class="action-btn">Messages</a>
+                            <a asp-controller="Account" asp-action="Manage" class="action-btn">Settings</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Donations -->
+            <div class="col-lg-6">
+                <div class="panel">
+                    <div class="panel-header d-flex justify-content-between align-items-center">
+                        <span>Recent Donations</span>
+                        <a asp-controller="Donation" asp-action="MyDonations" class="text-white small">All</a>
+                    </div>
+                    <div class="p-4">
+                        @if (recentDonations.Any())
+                        {
+                            @foreach (var d in recentDonations)
+                            {
+                                <div class="donation-item d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <div class="donation-amount">$@d.Amount.ToString("N0")</div>
+                                        <small class="text-muted">@d.CreatedAt.ToString("MMM dd, yyyy")</small>
+                                    </div>
+                                    <a asp-controller="Student" asp-action="Details" asp-route-id="@d.StudentId"
+                                       class="btn btn-sm btn-outline-info rounded-pill">View</a>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="text-center py-5 text-muted">
+                                <i class="bi bi-gift opacity-25" style="font-size: 3rem;"></i>
+                                <p class="mt-3">No donations yet.<br><small>Make your first gift today.</small></p>
+                                <a asp-controller="Student" asp-action="Index" class="btn btn-impact mt-2">Start Giving</a>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
+>>>>>>> origin/GateraMe

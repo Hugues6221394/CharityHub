@@ -1,0 +1,35 @@
+<<<<<<< HEAD
+@{
+    ViewData["Title"] = "Donor Dashboard";
+}
+
+@await Html.PartialAsync("_DonorDashboard")
+
+
+
+=======
+@{
+    ViewData["Title"] = "Donor Dashboard";
+}
+
+<div class="container py-4">
+    <h1 class="h3 mb-4 text-primary">Donor Dashboard</h1>
+
+    <div class="card shadow-sm rounded-4 border-0">
+        <div class="card-body">
+            @await Html.PartialAsync("_DonorDashboard")
+        </div>
+    </div>
+</div>
+
+<style>
+    .card {
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+</style>
+>>>>>>> origin/GateraMe
