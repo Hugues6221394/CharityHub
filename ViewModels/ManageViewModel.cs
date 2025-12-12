@@ -29,4 +29,7 @@ namespace StudentCharityHub.ViewModels
 }
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/GateraMe
