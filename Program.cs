@@ -26,34 +26,27 @@ builder.Configuration
     .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true)
     .AddEnvironmentVariables();
 
-
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 {
-    // Password settings
     options.Password.RequireDigit = true;
     options.Password.RequireLowercase = true;
     options.Password.RequireUppercase = true;
     options.Password.RequireNonAlphanumeric = true;
     options.Password.RequiredLength = 8;
 
-    // Lockout settings
     options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
     options.Lockout.MaxFailedAccessAttempts = 5;
     options.Lockout.AllowedForNewUsers = true;
 
-    // User settings
     options.User.RequireUniqueEmail = true;
     options.SignIn.RequireConfirmedEmail = false;
 
-    // Two-factor authentication
     options.Tokens.AuthenticatorTokenProvider = TokenOptions.DefaultAuthenticatorProvider;
 })
 .AddEntityFrameworkStores<ApplicationDbContext>()
 .AddDefaultTokenProviders();
 
-// 2FA is configured via Identity options above
-
-// Add authentication
+// Authentication
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = "JWT_OR_COOKIE";
@@ -62,8 +55,9 @@ builder.Services.AddAuthentication(options =>
 .AddJwtBearer("Bearer", options =>
 {
     var jwtSettings = builder.Configuration.GetSection("JwtSettings");
-    var secretKey = jwtSettings["SecretKey"] ?? throw new InvalidOperationException("JWT SecretKey not configured");
-    
+    var secretKey = jwtSettings["SecretKey"]
+        ?? throw new InvalidOperationException("JWT SecretKey not configured");
+
     options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
     {
         ValidateIssuer = true,
@@ -77,7 +71,6 @@ builder.Services.AddAuthentication(options =>
         ClockSkew = TimeSpan.Zero
     };
 
-    // Configure SignalR JWT authentication
     options.Events = new Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerEvents
     {
         OnMessageReceived = context =>
@@ -115,37 +108,36 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
-// Add CORS for React frontend
-// Add CORS for React frontend - allow local dev and production frontend URL
+// ------------------------
+// FIXED: Correct CORS block
+// ------------------------
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("ReactApp", policy =>
     {
-        policy.WithOrigins(
+        var allowedOrigins = new List<string>
+        {
             "http://localhost:5173",
             "http://localhost:3000",
-            "https://charity-hub-frontend.onrender.com"  // production frontend
-        )
-        .AllowAnyHeader()
-        .AllowAnyMethod()
-        .AllowCredentials();
-    });
-});
+            "https://charity-hub-frontend.onrender.com"
+        };
 
         var configOrigins = builder.Configuration["AllowedOrigins"];
         if (!string.IsNullOrEmpty(configOrigins))
         {
-            allowedOrigins.AddRange(configOrigins.Split(',', StringSplitOptions.RemoveEmptyEntries));
+            allowedOrigins.AddRange(
+                configOrigins.Split(',', StringSplitOptions.RemoveEmptyEntries)
+            );
         }
 
         policy.WithOrigins(allowedOrigins.ToArray())
-        .AllowAnyHeader()
-        .AllowAnyMethod()
-        .AllowCredentials();
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials();
     });
 });
 
-// Add Swagger/OpenAPI
+// Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
@@ -161,10 +153,9 @@ builder.Services.AddSwaggerGen(options =>
         }
     });
 
-    // Add JWT Bearer authentication to Swagger
     options.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
     {
-        Description = "JWT Authorization header using the Bearer scheme. Enter 'Bearer' [space] and then your token",
+        Description = "JWT Authorization header using the Bearer scheme",
         Name = "Authorization",
         In = Microsoft.OpenApi.Models.ParameterLocation.Header,
         Type = Microsoft.OpenApi.Models.SecuritySchemeType.ApiKey,
@@ -187,62 +178,57 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
-// Add SignalR
+// SignalR
 builder.Services.AddSignalR();
 
-// Add repository pattern
+// Repositories & services
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-
-// Add services
 builder.Services.AddScoped<IPaymentService, PaymentService>();
 builder.Services.AddScoped<INotificationService, NotificationService>();
 builder.Services.AddScoped<IReportService, ReportService>();
+
 builder.Services.AddHttpClient();
 builder.Services.AddRazorPages();
-
-// Add controllers and views
 builder.Services.AddControllersWithViews();
 
-// Add authorization policies
+// Authorization policies
 builder.Services.AddAuthorization(options =>
 {
-    // Existing role-based policies (keep for routing/dashboards)
-    options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"));
-    options.AddPolicy("DonorOnly", policy => policy.RequireRole("Donor"));
-    options.AddPolicy("StudentOnly", policy => policy.RequireRole("Student"));
-    options.AddPolicy("ManagerOnly", policy => policy.RequireRole("Manager"));
-    options.AddPolicy("AdminOrManager", policy => policy.RequireRole("Admin", "Manager"));
+    options.AddPolicy("AdminOnly", p => p.RequireRole("Admin"));
+    options.AddPolicy("DonorOnly", p => p.RequireRole("Donor"));
+    options.AddPolicy("StudentOnly", p => p.RequireRole("Student"));
+    options.AddPolicy("ManagerOnly", p => p.RequireRole("Manager"));
+    options.AddPolicy("AdminOrManager", p => p.RequireRole("Admin", "Manager"));
 
-    // Permission-based policies (PBAC) - roles remain active in parallel
-    options.AddPolicy("Permissions.Manage", policy => policy.RequireClaim("permission", PermissionsManagement.ManagePermissions));
-    options.AddPolicy("Permissions.Audit.View", policy => policy.RequireClaim("permission", PermissionsManagement.ViewAuditLog));
+    options.AddPolicy("Permissions.Manage", p => p.RequireClaim("permission", PermissionsManagement.ManagePermissions));
+    options.AddPolicy("Permissions.Audit.View", p => p.RequireClaim("permission", PermissionsManagement.ViewAuditLog));
 
-    options.AddPolicy("Users.View", policy => policy.RequireClaim("permission", Users.View));
-    options.AddPolicy("Users.Manage", policy => policy.RequireClaim("permission", Users.Manage));
+    options.AddPolicy("Users.View", p => p.RequireClaim("permission", Users.View));
+    options.AddPolicy("Users.Manage", p => p.RequireClaim("permission", Users.Manage));
 
-    options.AddPolicy("Students.View", policy => policy.RequireClaim("permission", Students.View));
-    options.AddPolicy("Students.Manage", policy => policy.RequireClaim("permission", Students.Manage));
+    options.AddPolicy("Students.View", p => p.RequireClaim("permission", Students.View));
+    options.AddPolicy("Students.Manage", p => p.RequireClaim("permission", Students.Manage));
 
-    options.AddPolicy("Donations.Create", policy => policy.RequireClaim("permission", Donations.Create));
-    options.AddPolicy("Donations.View", policy => policy.RequireClaim("permission", Donations.View));
-    options.AddPolicy("Donations.Verify", policy => policy.RequireClaim("permission", Donations.Verify));
+    options.AddPolicy("Donations.Create", p => p.RequireClaim("permission", Donations.Create));
+    options.AddPolicy("Donations.View", p => p.RequireClaim("permission", Donations.View));
+    options.AddPolicy("Donations.Verify", p => p.RequireClaim("permission", Donations.Verify));
 
-    options.AddPolicy("Progress.View", policy => policy.RequireClaim("permission", Progress.View));
-    options.AddPolicy("Progress.Manage", policy => policy.RequireClaim("permission", Progress.Manage));
+    options.AddPolicy("Progress.View", p => p.RequireClaim("permission", Progress.View));
+    options.AddPolicy("Progress.Manage", p => p.RequireClaim("permission", Progress.Manage));
 
-    options.AddPolicy("Reports.View", policy => policy.RequireClaim("permission", Reports.View));
-    options.AddPolicy("Reports.Manage", policy => policy.RequireClaim("permission", Reports.Manage));
+    options.AddPolicy("Reports.View", p => p.RequireClaim("permission", Reports.View));
+    options.AddPolicy("Reports.Manage", p => p.RequireClaim("permission", Reports.Manage));
 
-    options.AddPolicy("Messages.View", policy => policy.RequireClaim("permission", Messages.View));
-    options.AddPolicy("Messages.Manage", policy => policy.RequireClaim("permission", Messages.Manage));
+    options.AddPolicy("Messages.View", p => p.RequireClaim("permission", Messages.View));
+    options.AddPolicy("Messages.Manage", p => p.RequireClaim("permission", Messages.Manage));
 
-    options.AddPolicy("Notifications.View", policy => policy.RequireClaim("permission", Notifications.View));
-    options.AddPolicy("Notifications.Manage", policy => policy.RequireClaim("permission", Notifications.Manage));
+    options.AddPolicy("Notifications.View", p => p.RequireClaim("permission", Notifications.View));
+    options.AddPolicy("Notifications.Manage", p => p.RequireClaim("permission", Notifications.Manage));
 });
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Pipeline
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -251,53 +237,29 @@ if (!app.Environment.IsDevelopment())
 else
 {
     app.UseDeveloperExceptionPage();
-    // Enable Swagger in development
     app.UseSwagger();
     app.UseSwaggerUI(options =>
     {
         options.SwaggerEndpoint("/swagger/v1/swagger.json", "Student Charity Hub API v1");
-        options.RoutePrefix = "swagger"; // Access at /swagger
+        options.RoutePrefix = "swagger";
     });
 }
 
 app.UseHttpsRedirection();
-
-// Configure static files with CORS support
-var staticFileOptions = new StaticFileOptions
-{
-    OnPrepareResponse = ctx =>
-    {
-        // Allow CORS for static files (images, documents)
-        ctx.Context.Response.Headers.Append("Access-Control-Allow-Origin", "*");
-        ctx.Context.Response.Headers.Append("Access-Control-Allow-Methods", "GET");
-    }
-};
-app.UseStaticFiles(staticFileOptions);
+app.UseStaticFiles();
 
 app.UseRouting();
-
-// Enable CORS
 app.UseCors("ReactApp");
-
 
 app.UseAuthentication();
 app.UseAuthorization();
 
-// COMMENTED OUT MVC ROUTES - Using React Frontend Only
-// Uncomment these lines if you want to use MVC views again
-// app.MapControllerRoute(
-//     name: "default",
-//     pattern: "{controller=Home}/{action=Index}/{id?}");
-// app.MapRazorPages();
-
-// API Controllers only
 app.MapControllers();
 
-// SignalR Hubs
-app.MapHub<StudentCharityHub.Hubs.NotificationHub>("/hubs/notifications");
-app.MapHub<StudentCharityHub.Hubs.MessageHub>("/hubs/messages");
+app.MapHub<NotificationHub>("/hubs/notifications");
+app.MapHub<MessageHub>("/hubs/messages");
 
-// Seed database
+// Seeder
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
@@ -307,27 +269,23 @@ using (var scope = app.Services.CreateScope())
         var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
         var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
 
-        // Ensure database is created
         context.Database.EnsureCreated();
 
-        // Seed roles
         await SeedRolesAsync(roleManager);
-
-        // Seed admin user
         await SeedAdminUserAsync(userManager);
-
-        // Seed permission claims based on roles (PBAC runs alongside RBAC)
         await SeedPermissionClaimsAsync(userManager, roleManager);
         await EnsureAdminHasAllPermissionsAsync(userManager);
     }
     catch (Exception ex)
     {
         var logger = services.GetRequiredService<ILogger<Program>>();
-        logger.LogError(ex, "An error occurred while seeding the database.");
+        logger.LogError(ex, "An error occurred while seeding.");
     }
 }
 
 app.Run();
+
+// ---------------- SEEDERS ----------------
 
 static async Task SeedRolesAsync(RoleManager<IdentityRole> roleManager)
 {
@@ -418,7 +376,8 @@ static async Task SeedPermissionClaimsAsync(UserManager<ApplicationUser> userMan
             {
                 if (!existingClaims.Any(c => c.Type == permissionClaimType && c.Value == permission))
                 {
-                    await userManager.AddClaimAsync(user, new System.Security.Claims.Claim(permissionClaimType, permission));
+                    await userManager.AddClaimAsync(user,
+                        new System.Security.Claims.Claim(permissionClaimType, permission));
                 }
             }
         }
@@ -433,12 +392,13 @@ static async Task EnsureAdminHasAllPermissionsAsync(UserManager<ApplicationUser>
     if (adminUser == null) return;
 
     var existingClaims = await userManager.GetClaimsAsync(adminUser);
+
     foreach (var permission in AllPermissions)
     {
         if (!existingClaims.Any(c => c.Type == permissionClaimType && c.Value == permission))
         {
-            await userManager.AddClaimAsync(adminUser, new System.Security.Claims.Claim(permissionClaimType, permission));
+            await userManager.AddClaimAsync(adminUser,
+                new System.Security.Claims.Claim(permissionClaimType, permission));
         }
     }
 }
-
