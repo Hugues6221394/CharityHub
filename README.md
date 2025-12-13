@@ -1,550 +1,234 @@
-# Student Charity Hub - Light of Knowledge 🌟
+---
 
-[![.NET](https://img.shields.io/badge/.NET-8.0-purple.svg)](https://dotnet.microsoft.com/)
-[![ASP.NET Core](https://img.shields.io/badge/ASP.NET%20Core-MVC-blue.svg)](https://dotnet.microsoft.com/apps/aspnet)
-[![SQL Server](https://img.shields.io/badge/Database-SQL%20Server-red.svg)](https://www.microsoft.com/sql-server/)
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+# 🎓 Student Charity Hub
 
-> **Empowering Dreams Through Education** - A comprehensive ASP.NET Core MVC platform connecting compassionate donors with deserving students to create life-changing educational opportunities through transparent sponsorship relationships.
+### *Light of Knowledge — Transparent Digital Student Sponsorship Platform*
 
-![Student Charity Hub Dashboard](https://via.placeholder.com/800x400/2c3e50/ffffff?text=Student+Charity+Hub+-+Transparent+Student+Sponsorship)
+![.NET](https://img.shields.io/badge/.NET-8.0-purple.svg)
+![ASP.NET Core Web API](https://img.shields.io/badge/ASP.NET%20Core-Web%20API-blue.svg)
+![React](https://img.shields.io/badge/Frontend-React-61DAFB.svg)
+![PostgreSQL](https://img.shields.io/badge/Database-PostgreSQL-336791.svg)
+![License](https://img.shields.io/badge/License-MIT-green.svg)
 
-## 👥 Development Team - Group 4
+> **Student Charity Hub** is a modern, full-stack web platform designed to connect donors with financially disadvantaged students through a **secure, transparent, and accountable digital sponsorship system**.
 
-| Name | Student ID | Role & Responsibilities |
-|------|------------|-------------------------|
-| **Iriza Gatera Merveille** | 26266 | Backend Developer  |
-| **Hugues Ngabonziza** | 26148 | Full-Stack Developer & Project Lead |
-| **Keza Manzi Leila** | 26260 | Frontend Developer & UI/UX Designer |
-| **Tesi Divine** | 26017 | Business Analyst & Documentation Specialist & Quality Assurance & Testing Engineer |
-| **Iriza Yvonne** | 25875 |Database Architect & Fronted Developer|
+---
+
+## 📌 Project Overview
+
+Educational inequality remains a major barrier to human development. Many capable students fail to complete their studies due to **financial constraints, lack of sponsorship transparency, and weak donor–student engagement**.
+
+**Student Charity Hub** solves this problem by introducing a **technology-driven sponsorship platform** that ensures:
+
+* Full transparency of donations
+* Secure and traceable payment workflows
+* Continuous academic progress tracking
+* Meaningful donor–student relationships
+
+The system is built using **ASP.NET Core Web API**, **React**, and **PostgreSQL**, following industry-standard architectural and security practices.
+
+---
+
+## 👥 Development Team — Group 4
+
+| Name                       | Student ID | Role                                    |
+| -------------------------- | ---------- | --------------------------------------- |
+| **Iriza Gatera Merveille** | 26266      | Backend Developer                       |
+| **Hugues Ngabonziza**      | 26148      | Project Lead & Full-Stack Developer     |
+| **Keza Manzi Leila**       | 26260      | Frontend Developer & UI/UX Designer     |
+| **Tesi Divine**            | 26017      | Business Analyst, QA & Documentation    |
+| **Iriza Yvonne**           | 25875      | Database Architect & Frontend Developer |
 
 <img width="810" height="1080" alt="image" src="https://github.com/user-attachments/assets/b26a0062-1b16-4936-90e0-add44db88d4b" />
+---
 
+## 🎯 Problem Statement
 
+Despite Rwanda’s strong digital infrastructure and mobile money penetration, **many students are excluded from education due to financial limitations**.
+
+### Key Challenges
+
+* Donors lack visibility into how funds are used
+* Traditional charity models provide weak accountability
+* Students experience interrupted sponsorships
+* Academic progress is poorly documented
+
+This results in **donor mistrust, student dropouts, and unsustainable sponsorship models**.
 
 ---
 
-## 🚀 Quick Start
+## 💡 Proposed Solution
+
+**Student Charity Hub** introduces a **centralized digital platform** that enables:
+
+* Verified student profiles
+* Secure donations via PayPal and MTN Mobile Money
+* Real-time donation and payment tracking
+* Academic progress reporting
+* Automated notifications and receipts
+
+  <img width="602" height="275" alt="image" src="https://github.com/user-attachments/assets/37844f08-6c50-43af-901e-e6cc58dc760c" />
+
+
+The platform transforms charity into a **transparent, measurable, and relationship-driven process**.
+
+---
+<img width="1365" height="609" alt="image" src="https://github.com/user-attachments/assets/927a86ef-78f1-4a8b-a1c5-eff8def5fcac" />
+
+
+## 🚀 Core Features
+
+### 👨‍🎓 Students
+
+* Verified academic profiles
+* Funding goal and progress tracking
+* Academic updates and reports
+* Secure communication with donors
+
+### 💰 Donors
+
+* Browse and filter student profiles
+* Make secure online donations
+* Track donation impact in real time
+* Receive notifications and receipts
+
+### 🛠️ Administrators
+
+* Student verification and approval
+* Donation monitoring and auditing
+* Communication moderation
+* System analytics and reporting
+
+---
+
+## 🏗️ System Architecture
+
+The system follows a **client–server architecture** with a **RESTful API backend**.
+
+### High-Level Architecture
+
+* **Frontend**: React (SPA)
+* **Backend**: ASP.NET Core Web API
+* **Database**: PostgreSQL
+* **Payments**: PayPal API, MTN Mobile Money API
+* **Notifications**: Email (SendGrid)
+
+---
+
+## 🔁 Donation Workflow (Sequence Explanation)
+
+The donation process follows a secure, traceable flow:
+
+1. Donor selects a student in the React frontend
+2. Frontend sends request to ASP.NET Core Web API
+3. API creates a **pending donation record** in PostgreSQL
+4. Payment order is created via PayPal REST API
+5. Donor is redirected to PayPal for approval
+6. PayPal sends callback to the API
+7. API captures payment and verifies success
+8. Donation status is updated to **Completed**
+9. Payment logs and notifications are stored
+10. Student’s total raised amount is updated
+
+This ensures **full financial traceability and accountability**.
+
+---
+
+## 🗄️ Database Design (PostgreSQL)
+
+The PostgreSQL database stores:
+
+* Users (Donors, Students, Admins)
+* Students
+* Donations
+* PaymentLogs
+* Messages
+* Notifications
+
+Entity relationships ensure **data integrity, auditability, and consistency**.
+
+---
+
+## ⚙️ Technology Stack
+
+| Layer          | Technology                       |
+| -------------- | -------------------------------- |
+| Frontend       | React, JavaScript, HTML5, CSS3   |
+| Backend        | ASP.NET Core 8.0 Web API (C#)    |
+| Database       | PostgreSQL                       |
+| ORM            | Entity Framework Core            |
+| Authentication | JWT-based authentication         |
+| Payments       | PayPal API, MTN Mobile Money API |
+| Notifications  | SendGrid Email API               |
+
+---
+
+## 🔐 Security Measures
+
+* HTTPS communication
+* JWT authentication & authorization
+* Role-based access control
+* Secure payment verification
+* Input validation and error handling
+* Payment logging and audit trails
+
+---
+
+## 🧪 Testing & Quality Assurance
+
+* Unit testing of API services
+* Integration testing of payment workflows
+* Validation of authentication & authorization
+* Manual UI testing of React frontend
+
+---
+
+## 🚀 Installation & Setup
 
 ### Prerequisites
-- [.NET 8.0 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)
-- [SQL Server 2019+](https://www.microsoft.com/sql-server/) (LocalDB or full instance)
-- [Visual Studio 2022](https://visualstudio.microsoft.com/) or [VS Code](https://code.visualstudio.com/)
 
-### Installation & Setup
+* .NET SDK 8.0
+* Node.js (for React)
+* PostgreSQL
 
-1. **Clone and Setup**
-   ```bash
-   git clone https://github.com/Hugues6221394/CharityHub.git
-   cd StudentCharityHub
-   ```
+### Backend Setup
 
-2. **Database Configuration**
-   - Update connection string in `appsettings.json`:
-   ```json
-   "ConnectionStrings": {
-     "DefaultConnection": "Server=(localdb)\\mssqllocaldb;Database=STUDENT_HUB_DB;Trusted_Connection=true;TrustServerCertificate=true;"
-   }
-   ```
-
-3. **Database Migration**
-   ```bash
-   dotnet ef migrations add InitialCreate
-   dotnet ef database update
-   ```
-   Or in Visual Studio Package Manager Console:
-   ```powershell
-   Add-Migration InitialCreate
-   Update-Database
-   ```
-
-4. **Run Application**
-   ```bash
-   dotnet run
-   ```
-   Navigate to `https://localhost:7000`
-
-5. **Default Admin Access**
-   - **Email**: `admin@studentcharityhub.com`
-   - **Password**: `Admin@123`
-   - ⚠️ **Change password immediately after first login!**
-
----
-
-## ✨ Platform Features
-
-### 🎯 Core Functionality
-| Feature | Description | Impact |
-|---------|-------------|---------|
-| **Student Profiles** | Compelling stories with photos, academic backgrounds, and funding goals | Transparent donor connections |
-| **Secure Donations** | Multiple payment options (PayPal, MTN Mobile Money) with full transaction logging | Trustworthy financial processing |
-| **Progress Tracking** | Real-time academic updates, grade reports, and achievement milestones | Measurable educational impact |
-| **Sponsor Engagement** | Direct messaging, progress notifications, and relationship building | Long-term support relationships |
-
-### 🔐 Advanced Security & Authentication
-- **Multi-factor Authentication** - 2FA via Authenticator App
-- **Role-based Access Control** - Admin, Student, Donor with granular permissions
-- **Google OAuth Integration** - Seamless social login experience
-- **Secure Payment Processing** - PCI-compliant transaction handling
-- **Data Encryption** - End-to-end protection of sensitive information
-
-### 📊 Intelligent Dashboards
-| User Role | Dashboard Features |
-|-----------|-------------------|
-| **Administrators** | System analytics, user management, donation reports, progress monitoring |
-| **Donors** | Impact metrics, donation history, followed students, communication center |
-| **Students** | Funding progress, supporter network, academic updates, message inbox |
-
-### 🔔 Smart Notifications
-- **Real-time Updates** - Instant notifications for donations and progress
-- **Email Integration** - SendGrid-powered communication system
-- **In-app Alerts** - Persistent notification center
-- **Progress Subscriptions** - Customizable update preferences
-
----
-
-## 🏗️ Technical Architecture
-
-### Project Structure
-```
-StudentCharityHub/
-├── Controllers/                 # MVC Controllers with role-based authorization
-├── Models/                     # Entity models and data annotations
-├── Views/                      # Razor views with responsive design
-├── ViewModels/                 # Data transfer objects and view models
-├── Services/                   # Business logic and external integrations
-├── Repositories/               # Repository pattern implementation
-├── Data/                       # DbContext and database configuration
-├── Utilities/                  # Helper classes and extensions
-└── wwwroot/                    # Static assets (CSS, JS, images, documents)
-```
-
-### Database Schema Overview
-```mermaid
-erDiagram
-    Users {
-        int Id PK
-        string Email UK
-        string PasswordHash
-        string FirstName
-        string LastName
-        UserRole Role
-        UserStatus Status
-        datetime CreatedDate
-    }
-    
-    Students {
-        int UserId PK,FK
-        string Story
-        int Age
-        string Location
-        string DreamCareer
-        decimal FundingGoal
-        decimal RaisedAmount
-        bool IsActive
-    }
-    
-    Donors {
-        int UserId PK,FK
-        decimal TotalDonated
-        int StudentsSupported
-    }
-    
-    Donations {
-        int Id PK
-        int DonorId FK
-        int StudentId FK
-        decimal Amount
-        PaymentMethod Method
-        DonationStatus Status
-        datetime DonationDate
-    }
-    
-    ProgressReports {
-        int Id PK
-        int StudentId FK
-        string Title
-        string Description
-        string Grade
-        datetime ReportDate
-    }
-    
-    Users ||--o| Students : has_profile
-    Users ||--o| Donors : has_profile
-    Donors ||--o{ Donations : makes
-    Students ||--o{ Donations : receives
-    Students ||--o{ ProgressReports : has_updates
-```
-
-### Technology Stack
-| Layer | Technology | Purpose |
-|-------|------------|---------|
-| **Frontend** | Bootstrap 5, Razor Pages, JavaScript | Responsive, accessible user interface |
-| **Backend** | ASP.NET Core 8.0 MVC, C# 12 | Robust server-side processing |
-| **Database** | SQL Server, Entity Framework Core 8.0 | Reliable data persistence |
-| **Authentication** | ASP.NET Core Identity, Google OAuth | Secure user management |
-| **Payments** | PayPal API, MTN Mobile Money API | Flexible payment processing |
-| **Communication** | SendGrid API, SMTP | Reliable email notifications |
-
----
-
-## 🎮 User Guides
-
-### 👨‍💼 For Administrators
-1. **User Management**
-   - Create and manage student profiles with compelling stories
-   - Approve donor accounts and monitor activity
-   - Manage admin team members and permissions
-
-2. **Content Management**
-   - Upload student photos, transcripts, and academic documents
-   - Post progress reports and academic updates
-   - Moderate donor-student communications
-
-3. **Financial Oversight**
-   - Monitor all donation transactions
-   - Generate financial reports and analytics
-   - Track funding goals and disbursements
-
-4. **Reporting & Analytics**
-   - Export student data to CSV/Excel
-   - Generate PDF progress reports
-   - View platform-wide impact metrics
-
-### 💰 For Donors
-1. **Discover Students**
-   - Browse verified student profiles
-   - Filter by location, field of study, or funding needs
-   - Read compelling success stories
-
-2. **Make Impact**
-   - One-time or recurring donation options
-   - Multiple secure payment methods
-   - Instant donation receipts and tax documents
-
-3. **Track Progress**
-   - Receive automatic progress updates
-   - View academic achievements and milestones
-   - Monitor impact of your contributions
-
-4. **Build Relationships**
-   - Follow supported students
-   - Send encouraging messages
-   - Create long-term sponsorship relationships
-
-### 🎓 For Students
-1. **Profile Management**
-   - View your public profile (admin-created)
-   - Monitor funding progress towards goals
-   - Track supporter network
-
-2. **Academic Updates**
-   - Receive progress reports from administrators
-   - Share achievements and milestones
-   - Update academic goals and aspirations
-
-3. **Communication**
-   - Respond to donor messages
-   - Share gratitude and updates
-   - Build meaningful sponsor relationships
-
-4. **Progress Tracking**
-   - Monitor educational journey
-   - Track funding utilization
-   - Plan future academic steps
-
----
-
-## ⚙️ Configuration & Customization
-
-### External Service Integration
-
-#### Google OAuth Setup
-1. Visit [Google Cloud Console](https://console.cloud.google.com/)
-2. Create OAuth 2.0 credentials
-3. Configure authorized redirect URIs:
-   ```
-   https://localhost:7000/signin-google
-   https://yourdomain.com/signin-google
-   ```
-
-#### Payment Gateway Configuration
-```json
-{
-  "PayPal": {
-    "ClientId": "your-paypal-client-id",
-    "ClientSecret": "your-paypal-client-secret",
-    "Environment": "sandbox"
-  },
-  "MTNMobileMoney": {
-    "ApiKey": "your-mtn-api-key",
-    "ApiSecret": "your-mtn-api-secret",
-    "Environment": "sandbox"
-  }
-}
-```
-
-#### Email Service (SendGrid)
-```json
-{
-  "SendGrid": {
-    "ApiKey": "your-sendgrid-api-key",
-    "FromEmail": "noreply@studentcharityhub.com",
-    "FromName": "Student Charity Hub"
-  }
-}
-```
-
-### Security Configuration
-```json
-{
-  "Identity": {
-    "Password": {
-      "RequiredLength": 8,
-      "RequireUppercase": true,
-      "RequireLowercase": true,
-      "RequireDigit": true,
-      "RequireNonAlphanumeric": true
-    },
-    "Lockout": {
-      "MaxFailedAccessAttempts": 5,
-      "DefaultLockoutTimeSpan": "00:15:00"
-    },
-    "TwoFactor": {
-      "RequireTwoFactor": false,
-      "RememberMachine": true
-    }
-  }
-}
-```
-
----
-
-## 🧪 Quality Assurance
-
-### Testing Strategy
 ```bash
-# Run complete test suite
-dotnet test
-
-# Specific test categories
-dotnet test --filter "Category=Unit"
-dotnet test --filter "Category=Integration"
-dotnet test --filter "Category=UI"
+git clone https://github.com/Hugues6221394/CharityHub.git
+cd StudentCharityHub.Api
+dotnet restore
+dotnet ef database update
+dotnet run
 ```
 
-### Test Coverage
-- **Unit Tests**: Business logic, services, utilities
-- **Integration Tests**: Database operations, API endpoints
-- **UI Tests**: Razor page functionality, form validation
-- **Security Tests**: Authentication, authorization, data protection
+### Frontend Setup
 
-### Performance Benchmarks
-| Metric | Target | Current |
-|--------|---------|---------|
-| **Page Load Time** | < 2 seconds | ~1.3 seconds |
-| **Database Queries** | < 50ms average | ~35ms average |
-| **Concurrent Users** | 1000+ | 500+ (tested) |
-| **Uptime** | 99.9% | 100% (development) |
-
----
-
-## 🚀 Deployment Guide
-
-### Local Development Deployment
 ```bash
-# Publish application
-dotnet publish -c Release -o ./publish
-
-# Run published application
-cd ./publish
-dotnet StudentCharityHub.dll
-```
-
-### Production Deployment Options
-
-#### Azure App Service
-```bash
-# Azure CLI deployment
-az webapp up --name student-charity-hub --resource-group education-rg --runtime "DOTNETCORE:8.0"
-```
-
-#### Docker Containerization
-```dockerfile
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
-WORKDIR /app
-EXPOSE 80
-EXPOSE 443
-
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
-WORKDIR /src
-COPY ["StudentCharityHub.csproj", "."]
-RUN dotnet restore "StudentCharityHub.csproj"
-COPY . .
-RUN dotnet build "StudentCharityHub.csproj" -c Release -o /app/build
-
-FROM build AS publish
-RUN dotnet publish "StudentCharityHub.csproj" -c Release -o /app/publish
-
-FROM base AS final
-WORKDIR /app
-COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "StudentCharityHub.dll"]
-```
-
-#### Environment-Specific Configurations
-- **Development**: Full debugging, detailed errors, local database
-- **Staging**: Production-like with test data, monitoring enabled
-- **Production**: Optimized performance, security hardening, CDN integration
-
----
-
-## 📊 API Documentation
-
-### Core Endpoints
-
-| Endpoint | Method | Description | Authentication |
-|----------|--------|-------------|----------------|
-| `/api/students` | GET | List all active students | Public |
-| `/api/students/{id}` | GET | Get student details | Public |
-| `/api/donations` | POST | Create new donation | Donor+ |
-| `/api/progress/{studentId}` | GET | Get progress reports | Donor+ |
-| `/api/users/dashboard` | GET | User-specific dashboard | User+ |
-| `/api/admin/reports` | GET | Generate system reports | Admin |
-
-### Sample API Usage
-```csharp
-// Create donation
-var donation = new {
-    StudentId = 123,
-    Amount = 100.00,
-    PaymentMethod = "PayPal",
-    Notes = "Supporting education"
-};
-
-var response = await httpClient.PostAsJsonAsync("/api/donations", donation);
+cd student-charity-hub-frontend
+npm install
+npm start
 ```
 
 ---
 
-## 🔧 Development & Contribution
+## 📈 Expected Impact
 
-### Development Setup
-1. **Fork the repository**
-2. **Create feature branch**
-   ```bash
-   git checkout -b feature/amazing-feature
-   ```
-3. **Follow coding standards**
-   - Use meaningful variable names
-   - Include XML documentation
-   - Write unit tests for new features
-4. **Commit changes**
-   ```bash
-   git commit -m 'Add amazing feature'
-   ```
-5. **Push and create Pull Request**
-
-### Coding Standards
-- **C#**: Follow Microsoft C# coding conventions
-- **Frontend**: Semantic HTML, accessible design patterns
-- **Database**: Proper indexing, normalized design
-- **Security**: Input validation, parameterized queries
-
-### Branch Strategy
-- `main` - Production-ready code
-- `develop` - Integration branch
-- `feature/*` - New features
-- `hotfix/*` - Critical bug fixes
+* Increased donor trust through transparency
+* Reduced student dropout rates
+* Sustainable sponsorship relationships
+* Measurable educational outcomes
 
 ---
 
-## 📈 Impact Metrics & Success Stories
+## 🌍 Vision
 
-### Platform Statistics
-- **500+** Students provided educational opportunities
-- **$250,000+** in successful educational funding
-- **95%** student satisfaction rate
-- **100%** transparent fund allocation
-
-### Student Success Stories
-> "Thanks to Student Charity Hub, I became the first in my family to attend university. My sponsors not only funded my education but became mentors who guided my career path." - **Alice K., Software Engineering Student**
-
-> "The platform's transparency gave me confidence that my donations were making real impact. Seeing my sponsored student graduate was one of my proudest moments." - **John D., Regular Donor**
+> *A future where no student abandons education due to financial hardship, and every donor sees the real impact of their generosity.*
 
 ---
 
-## 🆘 Support & Troubleshooting
+## 📜 License
 
-### Common Issues & Solutions
-
-| Issue | Solution |
-|-------|----------|
-| **Database Connection Failed** | Verify SQL Server is running, check connection string |
-| **Email Not Sending** | Verify SendGrid API key, check spam folder |
-| **Payment Processing Failed** | Check payment gateway credentials, test in sandbox |
-| **File Upload Errors** | Verify wwwroot folder permissions, check file size limits |
-
-### Getting Help
-- 📧 **Email Support**: support@studentcharityhub.com
-- 🐛 **Issue Tracker**: [GitHub Issues](https://github.com/your-org/student-charity-hub/issues)
-- 📚 **Documentation**: [Full Documentation](https://docs.studentcharityhub.com)
-
-### Emergency Contacts
-- **Technical Support**: Hugues Ngabonziza
-- **Database Issues**: Iriza Gatera Merveille
-- **UI/UX Problems**: Keza Manzi Leila
+This project is licensed under the **MIT License**.
 
 ---
 
-## 📄 License & Legal
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-### Compliance & Privacy
-- **GDPR Compliant** - User data protection and privacy
-- **PCI DSS** - Secure payment processing standards
-- **FERPA** - Educational records privacy (where applicable)
-- **Local Regulations** - Compliance with regional education laws
-
----
-
-## 🙏 Acknowledgments
-
-### Technologies & Libraries
-- [ASP.NET Core 8.0](https://dotnet.microsoft.com/apps/aspnet) - Web framework
-- [Entity Framework Core 8.0](https://docs.microsoft.com/ef/core/) - Data access
-- [Bootstrap 5](https://getbootstrap.com/) - Frontend framework
-- [Font Awesome](https://fontawesome.com/) - Icons
-- [SendGrid](https://sendgrid.com/) - Email delivery
-- [PayPal .NET SDK](https://github.com/paypal/PayPal-NET-SDK) - Payment processing
-
-### Academic Support
-- **Course**: .NET Framework & C# Programming
-- **Institution**: Adventist University of Central Africa (AUCA)
-- **Academic Year**: 2024-2025
-- **Supervising Professor**: [Professor Name]
-
-### Special Thanks
-To all the students who shared their stories, the donors who believed in their potential, and the educational institutions that partnered with us to make dreams achievable.
-
----
-
-## 🌟 Our Vision
-
-> "We believe every student deserves the opportunity to pursue their educational dreams, regardless of financial circumstances. Through transparency, technology, and human connection, we're building bridges between potential and opportunity."
-
----
-
-<div align="center">
-
-### 🎓 **Empowering Education, Transforming Lives**
-
-[![Website](https://img.shields.io/badge/Website-StudentCharityHub.com-blue.svg)](https://studentcharityhub.com)
-[![Demo](https://img.shields.io/badge/Live-Demo-green.svg)](https://demo.studentcharityhub.com)
-[![Documentation](https://img.shields.io/badge/Docs-Full%20Documentation-orange.svg)](https://docs.studentcharityhub.com)
-
-*"The light of knowledge should never be extinguished by financial darkness"*
-
-</div>
