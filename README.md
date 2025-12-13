@@ -62,7 +62,7 @@ This results in **donor mistrust, student dropouts, and unsustainable sponsorshi
 **Student Charity Hub** introduces a **centralized digital platform** that enables:
 
 * Verified student profiles
-* Secure donations via PayPal and MTN Mobile Money
+* Secure donations via PayPal 
 * Real-time donation and payment tracking
 * Academic progress reporting
 * Automated notifications and receipts
@@ -110,7 +110,7 @@ The system follows a **client–server architecture** with a **RESTful API backe
 * **Frontend**: React (SPA)
 * **Backend**: ASP.NET Core Web API
 * **Database**: PostgreSQL
-* **Payments**: PayPal API, MTN Mobile Money API
+* **Payments**: PayPal API
 * **Notifications**: Email (SendGrid)
 
 ---
@@ -146,6 +146,7 @@ The PostgreSQL database stores:
 * Notifications
 
 Entity relationships ensure **data integrity, auditability, and consistency**.
+<img width="982" height="548" alt="image" src="https://github.com/user-attachments/assets/b98e9e6b-4701-44b0-a555-28dec7e3e773" />
 
 ---
 
@@ -158,7 +159,7 @@ Entity relationships ensure **data integrity, auditability, and consistency**.
 | Database       | PostgreSQL                       |
 | ORM            | Entity Framework Core            |
 | Authentication | JWT-based authentication         |
-| Payments       | PayPal API, MTN Mobile Money API |
+| Payments       | PayPal API |
 | Notifications  | SendGrid Email API               |
 
 ---
