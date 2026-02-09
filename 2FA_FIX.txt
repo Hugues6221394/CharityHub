@@ -1,0 +1,25 @@
+// Quick fix for LoginPage.jsx handleVerify2FA function
+// Replace lines 84-106 with this:
+
+    const handleVerify2FA = async () => {
+        try {
+            setError('');
+            setLoading(true);
+            const result = await authService.verify2FA(userId, twoFactorCode);
+
+            // Store token and user in localStorage
+            localStorage.setItem('token', result.token);
+            localStorage.setItem('user', JSON.stringify(result.user));
+
+            // Use window.location to force page reload and update auth context
+            const role = result.user.role;
+            if (role === 'Student') window.location.href = '/student/dashboard';
+            else if (role === 'Donor') window.location.href = '/donor/dashboard';
+            else if (role === 'Manager') window.location.href = '/manager/dashboard';
+            else if (role === 'Admin') window.location.href = '/admin/dashboard';
+            else window.location.href = '/';
+        } catch (err) {
+            setError('Invalid verification code. Please try again.');
+            setLoading(false);
+        }
+    };
